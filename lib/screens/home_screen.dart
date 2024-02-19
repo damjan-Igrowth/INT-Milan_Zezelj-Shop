@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/utils/constants.dart';
-import 'package:tech_byte/widgets/tb_elevated_button.dart';
+import 'package:tech_byte/widgets/button_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,17 +14,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding:
-            const EdgeInsets.only(left: kEdgeInsetSize, right: kEdgeInsetSize),
+        padding: EdgeInsets.symmetric(
+          horizontal: TBDimensions.app.screenMarginSize,
+        ),
         child: SafeArea(
           child: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TBButton(
-                type: TBButtonType.primary,
+                type: TBButtonType.filled,
                 onPressed: () {},
-                text: "Add Product",
+                text: "Add ProductProduct",
               ),
             ],
           )),
