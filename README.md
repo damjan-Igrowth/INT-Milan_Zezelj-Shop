@@ -1,1 +1,3 @@
-# INT-Milan_Zezelj-Shop
+# tech_byte
+
+A new Flutter project.
