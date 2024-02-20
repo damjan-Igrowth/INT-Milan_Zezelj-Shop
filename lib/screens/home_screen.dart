@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
               TBButton(
                 type: TBButtonType.filled,
                 onPressed: () {},
-                text: "Add ProductProduct",
+                text: "Add Product",
               ),
             ],
           )),

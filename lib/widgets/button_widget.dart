@@ -23,16 +23,14 @@ class TBButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ButtonStyle(
-        padding: MaterialStatePropertyAll(EdgeInsets.only(
-          top: TBDimensions.button.verticalPadding,
-          bottom: TBDimensions.button.verticalPadding,
-          left: TBDimensions.button.horizontalPadding,
-          right: TBDimensions.button.verticalPadding,
+        elevation: const MaterialStatePropertyAll(0),
+        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(
+          vertical: TBDimensions.button.verticalPadding,
+          horizontal: TBDimensions.button.horizontalPadding,
         )),
-        minimumSize: MaterialStatePropertyAll(Size(
-          double.infinity,
-          TBDimensions.button.height,
-        )),
+        minimumSize: MaterialStatePropertyAll(
+          Size.fromHeight(TBDimensions.button.minimumHeight),
+        ),
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) {
             if (type == TBButtonType.filled) {
