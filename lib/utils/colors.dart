@@ -8,3 +8,7 @@ class TBColor {
   static const grey = Color(0xFF7B828A);
   static const buttonBorderColor = Color(0xFFCFCFCF);
 }
+
+const Color tbBackgroundColor = Color.fromRGBO(248, 248, 248, 1);
+const Color tbAppBarGradientColor1 = Color.fromRGBO(42, 244, 177, 1);
+const Color tbAppBarGradientColor2 = Color.fromRGBO(4, 143, 241, 1);
