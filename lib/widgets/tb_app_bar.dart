@@ -34,26 +34,18 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  "assets/app_bar_icon.png",
-                  height: 32,
-                  width: 32,
-                ),
+                Image.asset("assets/app_bar_icon.png", height: 32, width: 32),
                 const SizedBox(width: 5),
                 ShaderMask(
                   blendMode: BlendMode.srcIn,
-                  shaderCallback: (bounds) => const LinearGradient(colors: [
-                    tbAppBarGradientColor1,
-                    tbAppBarGradientColor2
-                  ]).createShader(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [tbAppBarGradientColor1, tbAppBarGradientColor2],
+                  ).createShader(
                     Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                   ),
                   child: RichText(
                     text: const TextSpan(
-                      style: TextStyle(
-                        fontSize: 23.33,
-                        color: Colors.black,
-                      ),
+                      style: TextStyle(fontSize: 23.33, color: Colors.black),
                       children: [
                         TextSpan(text: "Tech"),
                         TextSpan(
@@ -67,9 +59,9 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Text(
               title!,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
-      actions: actions,
+      actions: title == null ? null : actions,
     );
   }
 }
