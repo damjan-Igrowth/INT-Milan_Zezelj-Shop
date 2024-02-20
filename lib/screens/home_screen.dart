@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
@@ -15,10 +16,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TBAppBar(
-        title: "Product details",
+        title: RichText(
+          text: TextSpan(
+            style: TextStyle(
+                fontSize: TBDimensions.appBar.specialTitleFontSize,
+                color: Colors.black),
+            children: const [
+              TextSpan(text: "Tech"),
+              TextSpan(
+                  text: "Byte", style: TextStyle(fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
         actions: [
           IconButton(
-            icon: Image.asset("assets/edit_icon.png"),
+            icon: Icon(
+              Icons.edit,
+              color: TBColor.appBar.blueGradientColor,
+            ),
             onPressed: () {},
           )
         ],
@@ -35,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
               TBButton(
                 type: TBButtonType.filled,
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const HomeScreen()));
                 },
                 text: "Add Product",
               ),

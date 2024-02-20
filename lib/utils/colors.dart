@@ -8,8 +8,8 @@ class TBColor {
 }
 
 class _TBAppBarColor {
-  final greenGradientColor = Color.fromRGBO(42, 244, 177, 1);
-  final blueGradientColor = Color.fromRGBO(4, 143, 241, 1);
+  final greenGradientColor = Color(0xFF2AE0B1);
+  final blueGradientColor = Color(0xFF048FF1);
 }
 
 class _TBAppColor {
