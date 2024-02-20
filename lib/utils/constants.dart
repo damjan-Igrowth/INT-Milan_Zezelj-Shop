@@ -3,6 +3,7 @@ class TBDimensions {
   static _TBButtonDimensions button = _TBButtonDimensions();
   static _TBAppDimensions app = _TBAppDimensions();
   static _TBIconDimensions icon = _TBIconDimensions();
+  static _TBAppBarDimensions appBar = _TBAppBarDimensions();
 }
 
 class _TBButtonDimensions {
@@ -21,11 +22,8 @@ class _TBIconDimensions {
   final size = 24.0;
 }
 
-const double kButtonBorderRadius = 12.0;
-const double kButtonHeight = 56.0;
-const double kEdgeInsetSize = 16.0;
-const double kIconSize = 24.0;
-const double kCircularIndicatorWidth = 2.0;
-const double kAppBarIconSize = 32.0;
-const double kAppBarBorderRadius = 12.0;
-const double kAppBarTitleFontSize = 20.0;
+class _TBAppBarDimensions {
+  final iconSize = 32.0;
+  final borderRadius = 12.0;
+  final titleFontSize = 20.0;
+}

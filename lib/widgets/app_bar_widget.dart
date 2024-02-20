@@ -21,14 +21,14 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () => Navigator.of(context).pop(),
               icon: Image.asset(
                 "assets/chevron_left_icon.png",
-                height: kIconSize,
-                width: kIconSize,
+                height: TBDimensions.appBar.iconSize,
+                width: TBDimensions.appBar.iconSize,
               ))
           : null,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(kAppBarBorderRadius),
-            bottomRight: Radius.circular(kAppBarBorderRadius)),
+            bottomLeft: Radius.circular(TBDimensions.appBar.borderRadius),
+            bottomRight: Radius.circular(TBDimensions.appBar.borderRadius)),
       ),
       title: title == null
           ? Row(
@@ -38,8 +38,11 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const SizedBox(width: 5),
                 ShaderMask(
                   blendMode: BlendMode.srcIn,
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [tbAppBarGradientColor1, tbAppBarGradientColor2],
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: [
+                      TBColor.appBar.greenGradientColor,
+                      TBColor.appBar.blueGradientColor
+                    ],
                   ).createShader(
                     Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                   ),
