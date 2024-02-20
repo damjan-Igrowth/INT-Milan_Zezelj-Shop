@@ -23,5 +23,6 @@ class _TBIconDimensions {
 }
 
 class _TBRatingDimensions {
-  final gapSize = 4.0;
+  final gapSize = 2.0;
+  final size = 15.0;
 }

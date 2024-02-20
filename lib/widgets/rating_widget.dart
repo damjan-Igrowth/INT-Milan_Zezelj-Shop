@@ -11,7 +11,7 @@ class TBRating extends StatelessWidget {
     return Row(
       children: [
         Text(
-          rating.toString(),
+          rating.toStringAsFixed(2),
           style: TextStyle(
               color: TBColor.rating.yellow,
               fontWeight: FontWeight.w600,
@@ -32,21 +32,31 @@ class TBRating extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Padding(
-                  padding: EdgeInsets.only(left: TBDimensions.rating.gapSize),
-                  child: Image.asset("assets/star.png")),
-              Padding(
-                  padding: EdgeInsets.only(left: TBDimensions.rating.gapSize),
-                  child: Image.asset("assets/star.png")),
-              Padding(
-                  padding: EdgeInsets.only(left: TBDimensions.rating.gapSize),
-                  child: Image.asset("assets/star.png")),
-              Padding(
-                  padding: EdgeInsets.only(left: TBDimensions.rating.gapSize),
-                  child: Image.asset("assets/star.png")),
-              Padding(
-                  padding: EdgeInsets.only(left: TBDimensions.rating.gapSize),
-                  child: Image.asset("assets/star.png")),
+              SizedBox(width: TBDimensions.rating.gapSize),
+              Icon(
+                Icons.star_rounded,
+                size: TBDimensions.rating.size,
+              ),
+              SizedBox(width: TBDimensions.rating.gapSize),
+              Icon(
+                Icons.star_rounded,
+                size: TBDimensions.rating.size,
+              ),
+              SizedBox(width: TBDimensions.rating.gapSize),
+              Icon(
+                Icons.star_rounded,
+                size: TBDimensions.rating.size,
+              ),
+              SizedBox(width: TBDimensions.rating.gapSize),
+              Icon(
+                Icons.star_rounded,
+                size: TBDimensions.rating.size,
+              ),
+              SizedBox(width: TBDimensions.rating.gapSize),
+              Icon(
+                Icons.star_rounded,
+                size: TBDimensions.rating.size,
+              ),
             ],
           ),
         )

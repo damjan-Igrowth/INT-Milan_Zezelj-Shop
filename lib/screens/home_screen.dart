@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TBRating(rating: 3),
+              TBRating(rating: 5),
               TBButton(
                 type: TBButtonType.filled,
                 onPressed: () {},
