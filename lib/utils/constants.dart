@@ -26,4 +26,5 @@ class _TBAppBarDimensions {
   final iconSize = 32.0;
   final borderRadius = 12.0;
   final titleFontSize = 20.0;
+  final specialTitleFontSize = 23.33;
 }

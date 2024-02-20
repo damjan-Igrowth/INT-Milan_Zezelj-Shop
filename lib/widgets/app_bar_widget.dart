@@ -34,22 +34,23 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset("assets/app_bar_icon.png", height: 32, width: 32),
+                Image.asset("assets/app_bar_icon.png",
+                    height: TBDimensions.appBar.iconSize,
+                    width: TBDimensions.appBar.iconSize),
                 const SizedBox(width: 5),
                 ShaderMask(
                   blendMode: BlendMode.srcIn,
-                  shaderCallback: (bounds) => LinearGradient(
-                    colors: [
-                      TBColor.appBar.greenGradientColor,
-                      TBColor.appBar.blueGradientColor
-                    ],
-                  ).createShader(
-                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                  ),
+                  shaderCallback: (bounds) => LinearGradient(colors: [
+                    TBColor.appBar.greenGradientColor,
+                    TBColor.appBar.blueGradientColor
+                  ]).createShader(
+                      Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
                   child: RichText(
-                    text: const TextSpan(
-                      style: TextStyle(fontSize: 23.33, color: Colors.black),
-                      children: [
+                    text: TextSpan(
+                      style: TextStyle(
+                          fontSize: TBDimensions.appBar.specialTitleFontSize,
+                          color: Colors.black),
+                      children: const [
                         TextSpan(text: "Tech"),
                         TextSpan(
                             text: "Byte",
@@ -62,7 +63,10 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Text(
               title!,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  fontSize: TBDimensions.appBar.titleFontSize,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Inter"),
             ),
       actions: title == null ? null : actions,
     );
