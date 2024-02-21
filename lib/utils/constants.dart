@@ -4,6 +4,8 @@ class TBDimensions {
   static _TBAppDimensions app = _TBAppDimensions();
   static _TBIconDimensions icon = _TBIconDimensions();
   static _TBSectionDimensions section = _TBSectionDimensions();
+  static _TBRatingDimensions rating = _TBRatingDimensions();
+  static _TBAppBarDimensions appBar = _TBAppBarDimensions();
 }
 
 class _TBButtonDimensions {
@@ -24,4 +26,15 @@ class _TBIconDimensions {
 
 class _TBSectionDimensions {
   final titlePadding = 12.0;
+}
+class _TBRatingDimensions {
+  final gapSize = 2.0;
+  final size = 15.0;
+}
+
+class _TBAppBarDimensions {
+  final iconSize = 32.0;
+  final borderRadius = 12.0;
+  final titleFontSize = 20.0;
+  final specialTitleFontSize = 23.33;
 }
