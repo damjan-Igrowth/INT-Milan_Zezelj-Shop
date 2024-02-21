@@ -18,10 +18,11 @@ class TBSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: TBDimensions.section.titlePadding),
+          padding:
+              EdgeInsets.symmetric(vertical: TBDimensions.section.titlePadding),
           child: Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
         ),
         content,
