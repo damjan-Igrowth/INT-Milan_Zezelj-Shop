@@ -35,9 +35,11 @@ class TBButton extends StatelessWidget {
           (states) {
             if (type == TBButtonType.filled) {
               if (states.contains(MaterialState.disabled)) {
-                return isLoading ? TBColor.lightBlue : TBColor.lightBlueGrey;
+                return isLoading
+                    ? TBColor.app.lightBlue
+                    : TBColor.app.lightBlueGrey;
               }
-              return TBColor.lightBlue;
+              return TBColor.app.lightBlue;
             } else {
               return Colors.white;
             }
@@ -55,7 +57,7 @@ class TBButton extends StatelessWidget {
           (states) {
             if (type == TBButtonType.filled) {
               if (states.contains(MaterialState.disabled)) {
-                return isLoading ? Colors.white : TBColor.grey;
+                return isLoading ? Colors.white : TBColor.app.grey;
               }
               return Colors.white;
             }
@@ -68,8 +70,8 @@ class TBButton extends StatelessWidget {
                 BorderRadius.circular(TBDimensions.button.borderRadius),
             side: type == TBButtonType.filled
                 ? BorderSide.none
-                : const BorderSide(
-                    color: TBColor.buttonBorderColor,
+                : BorderSide(
+                    color: TBColor.button.borderColor,
                     width: 1,
                   ),
           ),

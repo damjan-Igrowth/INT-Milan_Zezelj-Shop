@@ -3,6 +3,7 @@ class TBDimensions {
   static _TBButtonDimensions button = _TBButtonDimensions();
   static _TBAppDimensions app = _TBAppDimensions();
   static _TBIconDimensions icon = _TBIconDimensions();
+  static _TBAppBarDimensions appBar = _TBAppBarDimensions();
 }
 
 class _TBButtonDimensions {
@@ -19,4 +20,11 @@ class _TBAppDimensions {
 
 class _TBIconDimensions {
   final size = 24.0;
+}
+
+class _TBAppBarDimensions {
+  final iconSize = 32.0;
+  final borderRadius = 12.0;
+  final titleFontSize = 20.0;
+  final specialTitleFontSize = 23.33;
 }
