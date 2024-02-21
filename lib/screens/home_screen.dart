@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
+import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
@@ -48,12 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TBRating(rating: 5),
+              const TBRating(rating: 5),
               TBButton(
                 type: TBButtonType.filled,
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomeScreen()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => const HomeScreen()));
+                  showDialog(
+                      context: context,
+                      builder: (context) => TBAlertDialog.error(
+                            onPressed: () {},
+                            message:
+                                "Something went wrong while editing product!",
+                          ));
                 },
                 text: "Add Product",
               ),
