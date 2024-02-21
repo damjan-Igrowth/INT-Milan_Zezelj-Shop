@@ -5,6 +5,7 @@ class TBColor {
   static _TBAppColor app = _TBAppColor();
   static _TBAppBarColor appBar = _TBAppBarColor();
   static _TBButtonColor button = _TBButtonColor();
+  static _TBRatingColor rating = _TBRatingColor();
 }
 
 class _TBAppBarColor {
@@ -20,5 +21,15 @@ class _TBAppColor {
 }
 
 class _TBButtonColor {
-  final borderColor = Color(0xFFCFCFCF);
+  final borderColor = const Color(0xFFCFCFCF);
+}
+
+class _TBRatingColor {
+  final yellow = const Color(0xFFFFC046);
+  final grey = const Color(0xFFC0C0C0);
+  final gradientColors = [
+    const Color(0xFFFFC046),
+    const Color(0xFFFFC046),
+    const Color(0xFFC0C0C0)
+  ];
 }
