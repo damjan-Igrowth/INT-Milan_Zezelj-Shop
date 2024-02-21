@@ -6,6 +6,7 @@ import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
+import 'package:tech_byte/widgets/galery_widget.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
 
@@ -45,44 +46,52 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: TBDimensions.app.screenMarginSize,
-        ),
         child: SafeArea(
           child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TBSection(
-                  title: "Details",
-                  content: TBDetailOverviewCard(
-                    name: product.name,
-                    company: product.company,
-                    description: product.description,
-                    discount: product.discount,
-                    price: product.price,
-                    rating: product.rating,
-                  )),
-              const TBRating(rating: 5),
-              TBButton(
-                type: TBButtonType.filled,
-                onPressed: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const HomeScreen()));
-                  showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) => TBAlertDialog.error(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            message:
-                                "Something went wrong while editing product!",
-                          ));
-                },
-                text: "Add Product",
-              ),
-            ],
+              child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TBSection(
+                    title: "Details",
+                    content: TBDetailOverviewCard(
+                      name: product.name,
+                      company: product.company,
+                      description: product.description,
+                      discount: product.discount,
+                      price: product.price,
+                      rating: product.rating,
+                    )),
+                const TBRating(rating: 5),
+                TBGalery.url(
+                  images: [
+                    "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
+                    "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
+                  ],
+                ),
+                TBGalery.asset(
+                  images: [
+                    "assets/iphone_image.png",
+                  ],
+                ),
+                TBButton(
+                  type: TBButtonType.filled,
+                  onPressed: () {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => TBAlertDialog.error(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              message:
+                                  "Something went wrong while editing product!",
+                            ));
+                  },
+                  text: "Add Product",
+                ),
+              ],
+            ),
           )),
         ),
       ),
