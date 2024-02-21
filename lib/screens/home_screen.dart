@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tech_byte/models/product_model.dart';
+import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
+import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
 
@@ -14,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: TBColor.buttonBorderColor,
       body: Container(
         padding: EdgeInsets.symmetric(
           horizontal: TBDimensions.app.screenMarginSize,
