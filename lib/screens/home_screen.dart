@@ -3,6 +3,7 @@ import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/widgets/alert_dialog_widget.dart';
+import 'package:tech_byte/utils/icons.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TBColor.app.backgroundColor,
-      appBar: TBAppBar(
+      appBar: TBAppBar.styled(
         title: RichText(
           text: TextSpan(
             style: TextStyle(
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(
-              Icons.edit,
+              TBIcons.edit,
               color: TBColor.appBar.blueGradientColor,
             ),
             onPressed: () {},
