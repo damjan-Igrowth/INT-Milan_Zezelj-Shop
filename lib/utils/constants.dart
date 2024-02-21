@@ -8,6 +8,7 @@ class TBDimensions {
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
   static _TBCardDimensions card = _TBCardDimensions();
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
+  static _TBAlertDimensions alert = _TBAlertDimensions();
 }
 
 class _TBButtonDimensions {
@@ -55,4 +56,11 @@ class _TBGalleryDimensions {
   final imagePadding = 8.0;
   final imageBorderRadius = 16.0;
   final verticalPadding = 20.0;
+}
+
+class _TBAlertDimensions {
+  final iconSize = 24.0;
+  final contentPadding = 16.0;
+  final titlePadding = 12.0;
+  final borderRadius = 16.0;
 }
