@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
+import 'package:tech_byte/utils/icons.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TBAppBar(
+      appBar: TBAppBar.styled(
         title: RichText(
           text: TextSpan(
             style: TextStyle(
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(
-              Icons.edit,
+              TBIcons.edit,
               color: TBColor.appBar.blueGradientColor,
             ),
             onPressed: () {},
