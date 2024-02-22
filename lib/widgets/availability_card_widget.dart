@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tech_byte/models/product_model.dart';
+
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 
 class TBAvailabilityCard extends StatelessWidget {
-  final TBProduct product;
-  const TBAvailabilityCard({super.key, required this.product});
+  final String category;
+  final int onStock;
+  const TBAvailabilityCard(
+      {super.key, required this.category, required this.onStock});
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +24,16 @@ class TBAvailabilityCard extends StatelessWidget {
               padding: EdgeInsets.only(
                   bottom: TBDimensions.card.availabilityTitlePadding),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Category",
-                      style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14)),
+                  const Expanded(
+                    child: Text("Category",
+                        style: TextStyle(
+                            fontFamily: "Inter",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14)),
+                  ),
                   Text(
-                    product.category,
+                    category,
                     style: TextStyle(
                         color: TBColor.card.lightBlue,
                         fontFamily: "Inter",
@@ -41,7 +44,6 @@ class TBAvailabilityCard extends StatelessWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
                   padding:
@@ -51,12 +53,14 @@ class TBAvailabilityCard extends StatelessWidget {
                     color: TBColor.card.lightBlue,
                   ),
                 ),
-                Text(
-                  "On stock: ${product.onStock}",
-                  style: const TextStyle(
-                      fontFamily: "Inter",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14),
+                Expanded(
+                  child: Text(
+                    "On stock: $onStock",
+                    style: const TextStyle(
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14),
+                  ),
                 )
               ],
             ),

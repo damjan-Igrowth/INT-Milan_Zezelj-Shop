@@ -55,9 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
               TBSection(
                   title: "Availability",
                   content: TBAvailabilityCard(
-                    product: product,
+                    category: product.category,
+                    onStock: product.onStock,
                   )),
-              TBRating(rating: 5),
+              const TBRating(rating: 5),
               TBButton(
                 type: TBButtonType.filled,
                 onPressed: () {
