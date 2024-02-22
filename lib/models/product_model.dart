@@ -1,4 +1,4 @@
-class TBProduct {
+class TBProductModel {
   String name;
   String company;
   String category;
@@ -7,7 +7,7 @@ class TBProduct {
   double discount;
   double rating;
 
-  TBProduct.fromJson(Map<String, dynamic> json)
+  TBProductModel.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         company = json["company"],
         category = json["company"],
@@ -17,7 +17,7 @@ class TBProduct {
         rating = json["rating"];
 }
 
-TBProduct product = TBProduct.fromJson({
+TBProductModel product = TBProductModel.fromJson({
   "name": "iPhone 15 Pro",
   "company": "Apple",
   "category": "Smartphone",
