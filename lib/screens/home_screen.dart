@@ -54,7 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               TBSection(
                   title: "Details",
-                  content: TBDetailOverviewCard(product: product)),
+                  content: TBDetailOverviewCard(
+                    name: product.name,
+                    company: product.company,
+                    description: product.description,
+                    discount: product.discount,
+                    price: product.price,
+                    rating: product.rating,
+                  )),
               const TBRating(rating: 5),
               TBButton(
                 type: TBButtonType.filled,
