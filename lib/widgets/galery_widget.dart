@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 
-enum _TBGaleryImageType { url, asset }
+enum _TBGalleryImageType { url, asset }
 
-class TBGalery extends StatelessWidget {
+class TBGallery extends StatelessWidget {
   final PageController _pageController = PageController(
     viewportFraction: TBDimensions.galery.viewportFraction,
   );
   final List<String> images;
-  final _TBGaleryImageType _imageType;
+  final _TBGalleryImageType _imageType;
 
-  TBGalery.url({super.key, required this.images})
-      : _imageType = _TBGaleryImageType.url;
-  TBGalery.asset({super.key, required this.images})
-      : _imageType = _TBGaleryImageType.asset;
+  TBGallery.url({super.key, required this.images})
+      : _imageType = _TBGalleryImageType.url;
+  TBGallery.asset({super.key, required this.images})
+      : _imageType = _TBGalleryImageType.asset;
 
   @override
   Widget build(BuildContext context) {
@@ -36,28 +36,29 @@ class TBGalery extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: TBDimensions.galery.imagePadding,
               ),
-              child: LayoutBuilder(
-                builder: (context, BoxConstraints constraints) {
-                  return ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: _imageType == _TBGaleryImageType.asset
-                          ? Image.asset(
-                              images[itemIndex],
-                              fit: BoxFit.fill,
-                            )
-                          : Image.network(
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                return Container(
-                                    padding: EdgeInsets.all(galeryHeight * 0.4),
-                                    child: CircularProgressIndicator(
-                                        strokeWidth: 3,
-                                        color: TBColor.app.lightBlue));
-                              },
-                              images[itemIndex],
-                              fit: BoxFit.fill,
-                            ));
-                },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: _imageType == _TBGalleryImageType.asset
+                    ? Image.asset(
+                        images[itemIndex],
+                        fit: BoxFit.fill,
+                      )
+                    : Image.network(
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress != null) {
+                            if (loadingProgress.expectedTotalBytes != 0) {
+                              return Container(
+                                  padding: EdgeInsets.all(galeryHeight * 0.4),
+                                  child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                      color: TBColor.app.lightBlue));
+                            }
+                          }
+                          return child;
+                        },
+                        images[itemIndex],
+                        fit: BoxFit.fill,
+                      ),
               ),
             );
           },

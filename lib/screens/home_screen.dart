@@ -50,29 +50,29 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         child: SafeArea(
           child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TBSection(
-                      title: "Availability",
-                      content: TBAvailabilityCard(
-                        category: product.category,
-                        onStock: product.onStock,
-                      )),
-                  TBRating(rating: 5),
-                  TBGallery.url(
-                    images: [
-                      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
-                      "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
-                    ],
-                  ),
-                  TBGallery.asset(
-                    images: [
-                      "assets/iphone_image.png",
-                    ],
-                  ),
-                  TBSection(
+              child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TBSection(
+                    title: "Availability",
+                    content: TBAvailabilityCard(
+                      category: product.category,
+                      onStock: product.onStock,
+                    )),
+                TBRating(rating: 5),
+                TBGallery.url(
+                  images: [
+                    "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
+                    "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
+                  ],
+                ),
+                TBGallery.asset(
+                  images: [
+                    "assets/iphone_image.png",
+                  ],
+                ),
+                TBSection(
                     title: "Details",
                     content: TBDetailOverviewCard(
                       name: product.name,
@@ -81,21 +81,38 @@ class _HomeScreenState extends State<HomeScreen> {
                       discount: product.discount,
                       price: product.price,
                       rating: product.rating,
-                    ),
-                  ),
-                  const TBRating(rating: 5),
-                  TBButton(
-                    type: TBButtonType.filled,
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
-                    },
-                    text: "Add Product",
-                  ),
-                ],
-              ),
+                    )),
+                const TBRating(rating: 5),
+                TBGallery.url(
+                  images: [
+                    "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
+                    "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
+                  ],
+                ),
+                TBGallery.asset(
+                  images: [
+                    "assets/iphone_image.png",
+                  ],
+                ),
+                TBButton(
+                  type: TBButtonType.filled,
+                  onPressed: () {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => TBAlertDialog.error(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              message:
+                                  "Something went wrong while editing product!",
+                            ));
+                  },
+                  text: "Add Product",
+                ),
+              ],
             ),
-          ),
+          )),
         ),
       ),
     );
