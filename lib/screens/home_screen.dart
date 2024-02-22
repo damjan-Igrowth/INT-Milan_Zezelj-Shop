@@ -56,9 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (context) => const HomeScreen()));
                   showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (context) => TBAlertDialog.error(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                             message:
                                 "Something went wrong while editing product!",
                           ));
