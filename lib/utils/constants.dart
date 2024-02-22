@@ -6,6 +6,7 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
+  static _TBPickerListDimensions pickerList = _TBPickerListDimensions();
 }
 
 class _TBButtonDimensions {
@@ -27,6 +28,7 @@ class _TBIconDimensions {
 class _TBSectionDimensions {
   final titlePadding = 12.0;
 }
+
 class _TBRatingDimensions {
   final gapSize = 2.0;
   final size = 15.0;
@@ -37,4 +39,13 @@ class _TBAppBarDimensions {
   final borderRadius = 12.0;
   final titleFontSize = 20.0;
   final specialTitleFontSize = 23.33;
+}
+
+class _TBPickerListDimensions {
+  final borderRadius = 16.0;
+  final headerPadding = 20.0;
+  final iconSize = 20.0;
+  final itemContentSpacing = 20.0;
+  final itemContentHorizontalPadding = 20.0;
+  final itemContentVerticalPadding = 16.0;
 }

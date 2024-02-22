@@ -4,6 +4,7 @@ import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
+import 'package:tech_byte/widgets/picker_list_widget.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? _selectedCategory;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +54,23 @@ class _HomeScreenState extends State<HomeScreen> {
               TBRating(rating: 5),
               TBButton(
                 type: TBButtonType.filled,
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomeScreen()));
+                onPressed: () async {
+                  _selectedCategory = await showModalBottomSheet<String?>(
+                      context: context,
+                      builder: (context) => TBPickerList(
+                            items: const [
+                              (Icons.phone, "Smartphones"),
+                              (Icons.laptop, "Laptops"),
+                              (Icons.gamepad, "Video Games"),
+                              (Icons.audio_file, "Audio"),
+                              (Icons.microwave, "Appliance")
+                            ],
+                            title: "Category",
+                            selectedItem: _selectedCategory,
+                            onIconPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ));
                 },
                 text: "Add Product",
               ),
