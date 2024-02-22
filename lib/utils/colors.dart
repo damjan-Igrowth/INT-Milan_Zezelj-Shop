@@ -6,6 +6,7 @@ class TBColor {
   static _TBAppBarColor appBar = _TBAppBarColor();
   static _TBButtonColor button = _TBButtonColor();
   static _TBRatingColor rating = _TBRatingColor();
+  static _TBTextInputColor textInput = _TBTextInputColor();
 }
 
 class _TBAppBarColor {
@@ -32,4 +33,13 @@ class _TBRatingColor {
     const Color(0xFFFFC046),
     const Color(0xFFC0C0C0)
   ];
+}
+
+class _TBTextInputColor {
+  final grey = const Color(0xFF7B828A);
+  final black = const Color(0xFF181E25);
+  final purple = const Color(0xFF7E44F8);
+  final red = const Color(0xFFFF4242);
+  final disabledFillColor = const Color(0xFFF3F4F8);
+  final lightGrey = const Color(0xFFC9D2DE);
 }

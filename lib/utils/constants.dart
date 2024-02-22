@@ -6,6 +6,7 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
+  static _TBTextInputDimensions textInput = _TBTextInputDimensions();
 }
 
 class _TBButtonDimensions {
@@ -27,6 +28,7 @@ class _TBIconDimensions {
 class _TBSectionDimensions {
   final titlePadding = 12.0;
 }
+
 class _TBRatingDimensions {
   final gapSize = 2.0;
   final size = 15.0;
@@ -37,4 +39,10 @@ class _TBAppBarDimensions {
   final borderRadius = 12.0;
   final titleFontSize = 20.0;
   final specialTitleFontSize = 23.33;
+}
+
+class _TBTextInputDimensions {
+  final borderRadius = 12.0;
+  final verticalContentPadding = 10.0;
+  final horizontalContentPadding = 20.0;
 }
