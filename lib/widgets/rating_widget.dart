@@ -8,7 +8,8 @@ class TBRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
           rating.toStringAsFixed(2),
@@ -30,7 +31,8 @@ class TBRating extends StatelessWidget {
           ]).createShader(
             Rect.fromLTWH(0, 0, bounds.width, bounds.height),
           ),
-          child: Row(
+          child: Wrap(
+            runAlignment: WrapAlignment.center,
             children: [
               SizedBox(width: TBDimensions.rating.gapSize),
               Icon(
