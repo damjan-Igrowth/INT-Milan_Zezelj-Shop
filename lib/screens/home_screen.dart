@@ -50,7 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TBProductCard(
-                product: product,
+                category: product.category,
+                discount: product.discount,
+                image: product.image,
+                name: product.name,
+                onStock: product.onStock,
+                price: product.price,
+                rating: product.rating,
                 onTap: () {},
               ),
               // TBRating(rating: 5),

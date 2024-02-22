@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:tech_byte/models/product_model.dart';
+
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
 
 class TBProductCard extends StatelessWidget {
-  final TBProduct product;
-  final void Function() onTap;
-  const TBProductCard({super.key, required this.product, required this.onTap});
+  final void Function()? onTap;
+  final String name;
+  final String category;
+  final double price;
+  final double discount;
+  final String image;
+  final double rating;
+  final int onStock;
+
+  const TBProductCard(
+      {super.key,
+      required this.name,
+      required this.category,
+      required this.price,
+      required this.discount,
+      required this.image,
+      required this.rating,
+      required this.onStock,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +56,11 @@ class TBProductCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
                       TBDimensions.productCard.imageBorderRadius),
-                  child: Image.network(
-                    product.image,
-                    loadingBuilder: (context, child, loadingProgress) =>
-                        Container(
+                  child: Image.network(image,
+                      loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress != null) {
+                      if (loadingProgress.expectedTotalBytes != 0) {
+                        return Container(
                             padding: EdgeInsets.all(
                               MediaQuery.textScalerOf(context).scale(
                                   TBDimensions
@@ -52,8 +69,11 @@ class TBProductCard extends StatelessWidget {
                             child: CircularProgressIndicator(
                                 strokeWidth: TBDimensions
                                     .productCard.circularIndicatorWidth,
-                                color: TBColor.app.lightBlue)),
-                  ),
+                                color: TBColor.app.lightBlue));
+                      }
+                    }
+                    return child;
+                  }),
                 ),
               ),
               const SizedBox(
@@ -70,7 +90,7 @@ class TBProductCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            product.name,
+                            name,
                             style: const TextStyle(
                                 fontFamily: "Inter",
                                 fontSize: 16,
@@ -80,14 +100,14 @@ class TBProductCard extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(product.category,
+                              Text(category,
                                   style: TextStyle(
                                       color: TBColor.app.lightBlue,
                                       fontFamily: "Inter",
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500)),
-                              TBRating(rating: product.rating),
-                              Text("On stock: ${product.onStock}",
+                              TBRating(rating: rating),
+                              Text("On stock: ${onStock}",
                                   style: const TextStyle(
                                       fontFamily: "Inter",
                                       fontSize: 12,
@@ -102,7 +122,7 @@ class TBProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "-${product.discount.toStringAsFixed(2)}%",
+                          "-${discount.toStringAsFixed(2)}%",
                           style: TextStyle(
                               color: TBColor.card.green,
                               fontFamily: "Inter",
@@ -110,7 +130,7 @@ class TBProductCard extends StatelessWidget {
                               fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          "${product.price.toStringAsFixed(2)} \$",
+                          "${price.toStringAsFixed(2)} \$",
                           style: TextStyle(
                               color: TBColor.card.red,
                               fontFamily: "Inter",
