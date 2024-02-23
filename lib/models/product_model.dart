@@ -1,27 +1,27 @@
-class TBProduct {
+class TBProductModel {
   String name;
   String company;
   String category;
   String description;
   double price;
   double discount;
-  double rating;
   int onStock;
+  double rating;
   String image;
 
-  TBProduct.fromJson(Map<String, dynamic> json)
+  TBProductModel.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         company = json["company"],
-        category = json["category"],
+        category = json["company"],
         description = json["description"],
         price = json["price"],
         discount = json["discount"],
-        rating = json["rating"],
         onStock = json["onStock"],
+        rating = json["rating"],
         image = json["image"];
 }
 
-TBProduct product = TBProduct.fromJson({
+TBProductModel product = TBProductModel.fromJson({
   "name": "iPhone 15 Pro",
   "company": "Apple",
   "category": "Smartphone",
@@ -29,8 +29,8 @@ TBProduct product = TBProduct.fromJson({
       "Lorem ipsum dolor sit amet consectetur. Ornare id ullamcorper et non. Massa in urna volutpat sed sagittis eget. Nullam sollicitudin viverra egestas ante. Vitae blandit.",
   "price": 999.0,
   "discount": 12.5,
-  "rating": 3.67,
-  "onStock": 17,
+  "onStock": 1700000,
+  "rating": 3.85,
   "image":
       "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
 });

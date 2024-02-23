@@ -6,6 +6,9 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
+  static _TBAlertDimensions alert = _TBAlertDimensions();
+  static _TBCardDimensions card = _TBCardDimensions();
+  static _TBGalleryDimensions gallery = _TBGalleryDimensions();
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
 }
 
@@ -39,6 +42,28 @@ class _TBAppBarDimensions {
   final borderRadius = 12.0;
   final titleFontSize = 20.0;
   final specialTitleFontSize = 23.33;
+}
+
+class _TBAlertDimensions {
+  final iconSize = 24.0;
+  final contentPadding = 16.0;
+  final titlePadding = 12.0;
+  final borderRadius = 16.0;
+}
+
+class _TBCardDimensions {
+  final contentPadding = 16.0;
+  final contentHeaderPadding = 16.0;
+  final borderRadius = 12.0;
+  final availabilityTitlePadding = 12.0;
+  final iconSpacing = 10.0;
+}
+
+class _TBGalleryDimensions {
+  final viewportFraction = 0.9;
+  final imagePadding = 8.0;
+  final imageBorderRadius = 16.0;
+  final verticalPadding = 20.0;
 }
 
 class _TBProductCardDimensions {
