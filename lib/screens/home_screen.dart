@@ -9,7 +9,7 @@ import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
 import 'package:tech_byte/widgets/gallery_widget.dart';
-import 'package:tech_byte/widgets/rating_widget.dart';
+import 'package:tech_byte/widgets/product_card_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,13 +54,22 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  TBProductCard(
+                    category: product.category,
+                    discount: product.discount,
+                    image: product.image,
+                    name: product.name,
+                    onStock: product.onStock,
+                    price: product.price,
+                    rating: product.rating,
+                    onTap: () {},
+                  ),
                   TBSection(
                       title: "Availability",
                       content: TBAvailabilityCard(
                         category: product.category,
                         onStock: product.onStock,
                       )),
-                  const TBRating(rating: 5),
                   TBGallery.url(
                     images: const [
                       "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
@@ -83,7 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       rating: product.rating,
                     ),
                   ),
-                  const TBRating(rating: 5),
                   TBButton(
                     type: TBButtonType.filled,
                     onPressed: () {

@@ -48,4 +48,5 @@ class _TBCardColor {
   final green = const Color(0XFF43C16E);
   final black = const Color(0xFF121212);
   final lightBlue = const Color(0xFF34A4E3);
+  final border = const Color(0xFFF3F3F3);
 }

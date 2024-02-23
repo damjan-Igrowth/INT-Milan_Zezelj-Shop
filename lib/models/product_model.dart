@@ -7,6 +7,7 @@ class TBProductModel {
   double discount;
   int onStock;
   double rating;
+  String image;
 
   TBProductModel.fromJson(Map<String, dynamic> json)
       : name = json["name"],
@@ -16,7 +17,8 @@ class TBProductModel {
         price = json["price"],
         discount = json["discount"],
         onStock = json["onStock"],
-        rating = json["rating"];
+        rating = json["rating"],
+        image = json["image"];
 }
 
 TBProductModel product = TBProductModel.fromJson({
@@ -28,5 +30,7 @@ TBProductModel product = TBProductModel.fromJson({
   "price": 999.0,
   "discount": 12.5,
   "onStock": 1700000,
-  "rating": 3.85
+  "rating": 3.85,
+  "image":
+      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
 });
