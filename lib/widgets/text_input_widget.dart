@@ -45,7 +45,7 @@ class TBTextInput extends StatelessWidget {
         },
       ),
       decoration: InputDecoration(
-        suffixText: "%",
+        suffixText: suffixText,
         suffixIcon: suffixIcon,
         suffixIconColor: MaterialStateColor.resolveWith((states) {
           if (states.contains(MaterialState.disabled)) {
@@ -59,12 +59,13 @@ class TBTextInput extends StatelessWidget {
             horizontal: TBDimensions.textInput.horizontalContentPadding),
         labelText: label,
         floatingLabelStyle: MaterialStateTextStyle.resolveWith((states) {
-          Color color = TBColor.textInput.purple;
+          Color color = TBColor.textInput.black;
           if (states.contains(MaterialState.disabled)) {
             color = TBColor.textInput.grey;
-          }
-          if (states.contains(MaterialState.error)) {
+          } else if (states.contains(MaterialState.error)) {
             color = TBColor.textInput.red;
+          } else if (states.contains(MaterialState.focused)) {
+            color = TBColor.textInput.purple;
           }
           return TextStyle(
             color: color,
@@ -77,8 +78,7 @@ class TBTextInput extends StatelessWidget {
           Color color = TBColor.textInput.black;
           if (states.contains(MaterialState.disabled)) {
             color = TBColor.textInput.grey;
-          }
-          if (states.contains(MaterialState.error)) {
+          } else if (states.contains(MaterialState.error)) {
             color = TBColor.textInput.red;
           }
           return TextStyle(
