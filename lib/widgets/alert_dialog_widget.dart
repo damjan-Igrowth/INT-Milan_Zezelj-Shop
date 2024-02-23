@@ -4,19 +4,19 @@ import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 
-enum _TBAlertDialogType { error, success }
+enum TBAlertDialogType { error, success }
 
 class TBAlertDialog extends StatelessWidget {
   final void Function() onPressed;
   final String message;
-  final _TBAlertDialogType _type;
+  final TBAlertDialogType _type;
 
   const TBAlertDialog.error(
       {super.key, required this.onPressed, required this.message})
-      : _type = _TBAlertDialogType.error;
+      : _type = TBAlertDialogType.error;
   const TBAlertDialog.success(
       {super.key, required this.onPressed, required this.message})
-      : _type = _TBAlertDialogType.success;
+      : _type = TBAlertDialogType.success;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TBAlertDialog extends StatelessWidget {
             Padding(
               padding:
                   EdgeInsets.only(bottom: TBDimensions.alert.contentPadding),
-              child: _type == _TBAlertDialogType.error
+              child: _type == TBAlertDialogType.error
                   ? CircleAvatar(
                       radius: TBDimensions.alert.iconSize,
                       backgroundColor: TBColor.alert.lightRed,
@@ -54,13 +54,13 @@ class TBAlertDialog extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: TBDimensions.alert.titlePadding),
-              child: Text(
-                  _type == _TBAlertDialogType.error ? "Error!" : "Success!",
-                  style: const TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
+              child:
+                  Text(_type == TBAlertDialogType.error ? "Error!" : "Success!",
+                      style: const TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
             ),
             Padding(
               padding:
@@ -73,7 +73,7 @@ class TBAlertDialog extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   )),
             ),
-            _type == _TBAlertDialogType.error
+            _type == TBAlertDialogType.error
                 ? TBButton(
                     text: "Try again",
                     type: TBButtonType.outlined,
