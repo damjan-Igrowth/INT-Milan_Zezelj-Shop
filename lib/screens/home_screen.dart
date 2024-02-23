@@ -3,7 +3,6 @@ import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
-import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
@@ -55,11 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TBSection(
-                      title: "Availability",
-                      content: TBAvailabilityCard(
-                        category: product.category,
-                        onStock: product.onStock,
-                      )),
+                  title: "Availability",
+                  content: TBAvailabilityCard(
+                    category: product.category,
+                    onStock: product.onStock,
+                  )),
                   TBRating(rating: 5),
                   TBGallery.url(
                     images: [
@@ -89,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const HomeScreen()));
-                    },
-                    text: "Add Product",
+                   },
+                  text: "Add Product",
                   ),
                 ],
               ),
