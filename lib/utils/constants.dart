@@ -6,6 +6,7 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
+  static _TBAlertDimensions alert = _TBAlertDimensions();
   static _TBCardDimensions card = _TBCardDimensions();
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
 }
@@ -40,6 +41,13 @@ class _TBAppBarDimensions {
   final borderRadius = 12.0;
   final titleFontSize = 20.0;
   final specialTitleFontSize = 23.33;
+}
+
+class _TBAlertDimensions {
+  final iconSize = 24.0;
+  final contentPadding = 16.0;
+  final titlePadding = 12.0;
+  final borderRadius = 16.0;
 }
 
 class _TBCardDimensions {

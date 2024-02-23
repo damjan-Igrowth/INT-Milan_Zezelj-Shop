@@ -3,6 +3,7 @@ import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
+import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
@@ -54,20 +55,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TBSection(
-                  title: "Availability",
-                  content: TBAvailabilityCard(
-                    category: product.category,
-                    onStock: product.onStock,
-                  )),
-                  TBRating(rating: 5),
+                      title: "Availability",
+                      content: TBAvailabilityCard(
+                        category: product.category,
+                        onStock: product.onStock,
+                      )),
+                  const TBRating(rating: 5),
                   TBGallery.url(
-                    images: [
+                    images: const [
                       "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
                       "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
                     ],
                   ),
                   TBGallery.asset(
-                    images: [
+                    images: const [
                       "assets/iphone_image.png",
                     ],
                   ),
@@ -86,10 +87,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   TBButton(
                     type: TBButtonType.filled,
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
-                   },
-                  text: "Add Product",
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const HomeScreen()));
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => TBAlertDialog.error(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                message:
+                                    "Something went wrong while editing product!",
+                              ));
+                    },
+                    text: "Add Product",
                   ),
                 ],
               ),
