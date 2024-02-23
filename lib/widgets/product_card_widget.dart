@@ -56,7 +56,7 @@ class TBProductCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
                       TBDimensions.productCard.imageBorderRadius),
-                  child: Image.network(image,
+                  child: Image.network(image, fit: BoxFit.fill,
                       loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress != null) {
                       if (loadingProgress.expectedTotalBytes != 0) {
