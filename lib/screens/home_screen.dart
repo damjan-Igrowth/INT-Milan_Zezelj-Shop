@@ -53,17 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TBSection(
-                    title: "Details",
-                    content: TBDetailOverviewCard(
-                      name: product.name,
-                      company: product.company,
-                      description: product.description,
-                      discount: product.discount,
-                      price: product.price,
-                      rating: product.rating,
-                    )),
-                const TBRating(rating: 5),
+                TBRating(rating: 5),
                 TBGallery.url(
                   images: [
                     "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
@@ -75,19 +65,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/iphone_image.png",
                   ],
                 ),
+                TBSection(
+                  title: "Details",
+                  content: TBDetailOverviewCard(
+                    name: product.name,
+                    company: product.company,
+                    description: product.description,
+                    discount: product.discount,
+                    price: product.price,
+                    rating: product.rating,
+                  ),
+                ),
+                const TBRating(rating: 5),
                 TBButton(
                   type: TBButtonType.filled,
                   onPressed: () {
-                    showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => TBAlertDialog.error(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              message:
-                                  "Something went wrong while editing product!",
-                            ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
                   },
                   text: "Add Product",
                 ),
