@@ -8,7 +8,7 @@ class TBDimensions {
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
   static _TBCardDimensions card = _TBCardDimensions();
   static _TBAlertDimensions alert = _TBAlertDimensions();
-  static _TBGaleryDimensions galery = _TBGaleryDimensions();
+  static _TBGalleryDimensions gallery = _TBGalleryDimensions();
 }
 
 class _TBButtonDimensions {
@@ -56,7 +56,7 @@ class _TBCardDimensions {
   final borderRadius = 12.0;
 }
 
-class _TBGaleryDimensions {
+class _TBGalleryDimensions {
   final viewportFraction = 0.9;
   final imagePadding = 8.0;
   final imageBorderRadius = 16.0;
