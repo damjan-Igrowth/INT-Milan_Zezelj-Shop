@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
@@ -7,6 +8,7 @@ import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
+import 'package:tech_byte/widgets/picker_list_widget.dart';
 import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
 import 'package:tech_byte/widgets/gallery_widget.dart';
 import 'package:tech_byte/widgets/product_card_widget.dart';
@@ -21,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? _selectedCategory;
   TextEditingController _textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
