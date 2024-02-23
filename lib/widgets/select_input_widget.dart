@@ -8,12 +8,19 @@ class TBSelectInput extends StatefulWidget {
   final String label;
   final void Function(String?) onTap;
   final String? selectedItem;
+  final bool enabled;
+  final Widget? suffixIcon;
+  final String? suffixText;
+
   const TBSelectInput(
       {super.key,
       required this.label,
       required this.onTap,
       this.selectedItem,
-      required this.items});
+      required this.items,
+      this.enabled = true,
+      this.suffixIcon,
+      this.suffixText});
 
   @override
   State<TBSelectInput> createState() => _TBSelectInputState();
@@ -34,6 +41,9 @@ class _TBSelectInputState extends State<TBSelectInput> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: TBTextInput(
+        enabled: widget.enabled,
+        suffixIcon: widget.suffixIcon,
+        suffixText: widget.suffixText,
         onTap: () {
           showModalBottomSheet(
               context: context,
@@ -41,6 +51,7 @@ class _TBSelectInputState extends State<TBSelectInput> {
                   title: widget.label,
                   selectedItem: _selectedItem,
                   items: widget.items,
+                  onIconPressed: () => Navigator.of(context).pop(),
                   onItemPressed: (value) {
                     setState(() {
                       _selectedItem = value;

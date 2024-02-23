@@ -55,114 +55,45 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TBProductCard(
-                    category: product.category,
-                    discount: product.discount,
-                    image: product.image,
-                    name: product.name,
-                    onStock: product.onStock,
-                    price: product.price,
-                    rating: product.rating,
-                    onTap: () {},
-                  ),
-                  TBSection(
-                      title: "Availability",
-                      content: TBAvailabilityCard(
-                        category: product.category,
-                        onStock: product.onStock,
-                      )),
-                  TBGallery.url(
-                    images: const [
-                      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
-                      "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
-                    ],
-                  ),
-                  TBGallery.asset(
-                    images: const [
-                      "assets/iphone_image.png",
-                    ],
-                  ),
-                  TBSection(
-                    title: "Details",
-                    content: TBDetailOverviewCard(
-                      name: product.name,
-                      company: product.company,
-                      description: product.description,
-                      discount: product.discount,
-                      price: product.price,
-                      rating: product.rating,
-                    ),
-                  ),
-                  // TBButton(
-                  //   type: TBButtonType.filled,
-                  //   onPressed: () {
-                  //     // Navigator.of(context).push(MaterialPageRoute(
-                  //     //     builder: (context) => const HomeScreen()));
-                  //     showDialog(
-                  //         barrierDismissible: false,
-                  //         context: context,
-                  //         builder: (context) => TBAlertDialog.error(
-                  //               onPressed: () {
-                  //                 Navigator.of(context).pop();
-                  //               },
-                  //               message:
-                  //                   "Something went wrong while editing product!",
-                  //             ));
-                  //   },
-                  //   text: "Add Product",
-                  // ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  // Form(
-                  //   key: _formKey,
-                  //   child: Column(
-                  //     children: [
-                  //       TBTextInput(
-                  //         enabled: false,
-                  //         suffixIcon: Icon(Icons.business_rounded),
-                  //         textEditingController: _textEditingController,
-                  //         label: "Text",
-                  //         validator: (value) {
-                  //           if (value == "") {
-                  //             return "Cant be empty";
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //       SizedBox(
-                  //         height: 20,
-                  //       ),
-                  //       TBTextInput(
-                  //         suffixIcon: Icon(Icons.business_rounded),
-                  //         textEditingController: TextEditingController(),
-                  //         label: "Text",
-                  //         validator: (value) {
-                  //           if (value == "") {
-                  //             return "Cant be empty";
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-
+                  Form(
+                    key: _formKey,
+                    child: TBTextInput(
+                      enabled: false,
+                      textEditingController: _textEditingController,
+                      label: "Text",
+                      validator: (p0) {
+                        if (p0 == "") {
+                          return "cant be empty";
+                        }
+                        return null;
+                      },
+                      suffixIcon: Icon(Icons.abc),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   TBSelectInput(
                     label: "Category",
+                    enabled: true,
+                    selectedItem: "Apple",
+                    suffixIcon: Icon(Icons.business),
+                    // suffixText: "%",
                     items: [
                       TBPickerListItemModel(name: "Phone"),
                       TBPickerListItemModel(name: "Laptop"),
-                      TBPickerListItemModel(name: "Apple")
+                      TBPickerListItemModel(
+                          name: "Apple", iconData: Icons.business_sharp)
                     ],
                     onTap: (value) {
                       setState(
@@ -172,7 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
+                  const SizedBox(
+                    height: 20,
+                  ),
                   TBButton(
                     type: TBButtonType.filled,
                     onPressed: () {
