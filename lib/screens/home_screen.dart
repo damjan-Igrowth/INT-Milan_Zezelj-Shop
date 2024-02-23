@@ -63,13 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       rating: product.rating,
                     )),
                 const TBRating(rating: 5),
-                TBGallery.url(
+                TBGalery.url(
                   images: [
                     "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
                     "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
                   ],
                 ),
-                TBGallery.asset(
+                TBGalery.asset(
                   images: [
                     "assets/iphone_image.png",
                   ],
