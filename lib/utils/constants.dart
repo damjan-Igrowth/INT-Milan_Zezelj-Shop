@@ -46,6 +46,8 @@ class _TBCardDimensions {
   final contentPadding = 16.0;
   final contentHeaderPadding = 16.0;
   final borderRadius = 12.0;
+  final availabilityTitlePadding = 12.0;
+  final iconSpacing = 10.0;
 }
 
 class _TBGalleryDimensions {

@@ -4,6 +4,7 @@ import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
+import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
 import 'package:tech_byte/widgets/gallery_widget.dart';
@@ -52,6 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  TBSection(
+                  title: "Availability",
+                  content: TBAvailabilityCard(
+                    category: product.category,
+                    onStock: product.onStock,
+                  )),
                   TBRating(rating: 5),
                   TBGallery.url(
                     images: [
@@ -83,10 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) => const HomeScreen()));
                    },
                   text: "Add Product",
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
-          )),
+          ),
         ),
       ),
     );
