@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
 
 class TBDetailOverviewCard extends StatelessWidget {
-  final String name;
-  final String description;
-  final String company;
-  final double price;
-  final double discount;
-  final double rating;
-
-  const TBDetailOverviewCard(
-      {super.key,
-      required this.name,
-      required this.description,
-      required this.company,
-      required this.price,
-      required this.discount,
-      required this.rating});
+  final TBProduct product;
+  const TBDetailOverviewCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -35,36 +23,35 @@ class TBDetailOverviewCard extends StatelessWidget {
               padding: EdgeInsets.only(
                   bottom: TBDimensions.card.contentHeaderPadding),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          company,
-                          style: TextStyle(
-                            color: TBColor.card.lightBlue,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.company,
+                        style: TextStyle(
+                          color: TBColor.card.lightBlue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
-                        Text(
-                          name,
-                          style: TextStyle(
-                            color: TBColor.card.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
+                      ),
+                      Text(
+                        product.name,
+                        style: TextStyle(
+                          color: TBColor.card.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
                         ),
-                        TBRating(rating: rating),
-                      ],
-                    ),
+                      ),
+                      TBRating(rating: product.rating),
+                    ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "${price}\$",
+                        "${product.price}\$",
                         style: TextStyle(
                           color: TBColor.card.red,
                           fontFamily: "Inter",
@@ -73,7 +60,7 @@ class TBDetailOverviewCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "-${discount}%",
+                        "${product.discount}%",
                         style: TextStyle(
                           color: TBColor.card.green,
                           fontFamily: "Inter",
@@ -86,7 +73,7 @@ class TBDetailOverviewCard extends StatelessWidget {
                 ],
               ),
             ),
-            Text(description),
+            Text(product.description),
           ],
         ),
       ),
