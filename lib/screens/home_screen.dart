@@ -13,6 +13,7 @@ import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
 import 'package:tech_byte/widgets/gallery_widget.dart';
 import 'package:tech_byte/widgets/product_card_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
+import 'package:tech_byte/widgets/select_input_widget.dart';
 import 'package:tech_byte/widgets/text_input_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -98,64 +99,80 @@ class _HomeScreenState extends State<HomeScreen> {
                       rating: product.rating,
                     ),
                   ),
-                  TBButton(
-                    type: TBButtonType.filled,
-                    onPressed: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const HomeScreen()));
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) => TBAlertDialog.error(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                message:
-                                    "Something went wrong while editing product!",
-                              ));
+                  // TBButton(
+                  //   type: TBButtonType.filled,
+                  //   onPressed: () {
+                  //     // Navigator.of(context).push(MaterialPageRoute(
+                  //     //     builder: (context) => const HomeScreen()));
+                  //     showDialog(
+                  //         barrierDismissible: false,
+                  //         context: context,
+                  //         builder: (context) => TBAlertDialog.error(
+                  //               onPressed: () {
+                  //                 Navigator.of(context).pop();
+                  //               },
+                  //               message:
+                  //                   "Something went wrong while editing product!",
+                  //             ));
+                  //   },
+                  //   text: "Add Product",
+                  // ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  // Form(
+                  //   key: _formKey,
+                  //   child: Column(
+                  //     children: [
+                  //       TBTextInput(
+                  //         enabled: false,
+                  //         suffixIcon: Icon(Icons.business_rounded),
+                  //         textEditingController: _textEditingController,
+                  //         label: "Text",
+                  //         validator: (value) {
+                  //           if (value == "") {
+                  //             return "Cant be empty";
+                  //           }
+                  //           return null;
+                  //         },
+                  //       ),
+                  //       SizedBox(
+                  //         height: 20,
+                  //       ),
+                  //       TBTextInput(
+                  //         suffixIcon: Icon(Icons.business_rounded),
+                  //         textEditingController: TextEditingController(),
+                  //         label: "Text",
+                  //         validator: (value) {
+                  //           if (value == "") {
+                  //             return "Cant be empty";
+                  //           }
+                  //           return null;
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  TBSelectInput(
+                    label: "Category",
+                    items: [
+                      TBPickerListItemModel(name: "Phone"),
+                      TBPickerListItemModel(name: "Laptop"),
+                      TBPickerListItemModel(name: "Apple")
+                    ],
+                    onTap: (value) {
+                      setState(
+                        () {
+                          _selectedCategory = value;
+                        },
+                      );
                     },
-                    text: "Add Product",
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        TBTextInput(
-                          enabled: false,
-                          suffixIcon: Icon(Icons.business_rounded),
-                          textEditingController: _textEditingController,
-                          label: "Text",
-                          validator: (value) {
-                            if (value == "") {
-                              return "Cant be empty";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TBTextInput(
-                          // suffixIcon: Icon(Icons.business_rounded),
-                          suffixText: "%",
-                          textEditingController: TextEditingController(),
-                          label: "Text",
-                          validator: (value) {
-                            if (value == "") {
-                              return "Cant be empty";
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
+
                   TBButton(
                     type: TBButtonType.filled,
                     onPressed: () {
