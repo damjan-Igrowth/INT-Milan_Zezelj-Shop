@@ -6,7 +6,7 @@ import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
-import 'package:tech_byte/widgets/gallery_widget.dart';
+import 'package:tech_byte/widgets/galery_widget.dart';
 import 'package:tech_byte/widgets/rating_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
 

@@ -6,7 +6,7 @@ enum _TBGalleryImageType { url, asset }
 
 class TBGallery extends StatelessWidget {
   final PageController _pageController = PageController(
-    viewportFraction: TBDimensions.gallery.viewportFraction,
+    viewportFraction: TBDimensions.galery.viewportFraction,
   );
   final List<String> images;
   final _TBGalleryImageType _imageType;
@@ -18,15 +18,15 @@ class TBGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double galleryHeight = MediaQuery.of(context).size.width -
+    double galeryHeight = MediaQuery.of(context).size.width -
         (MediaQuery.of(context).size.width *
-            (1 - TBDimensions.gallery.viewportFraction)) -
-        TBDimensions.gallery.imagePadding * 2;
+            (1 - TBDimensions.galery.viewportFraction)) -
+        TBDimensions.galery.imagePadding * 2;
     return Padding(
       padding:
-          EdgeInsets.symmetric(vertical: TBDimensions.gallery.verticalPadding),
+          EdgeInsets.symmetric(vertical: TBDimensions.galery.verticalPadding),
       child: SizedBox(
-        height: galleryHeight,
+        height: galeryHeight,
         width: MediaQuery.of(context).size.width,
         child: PageView.builder(
           controller: _pageController,
@@ -34,7 +34,7 @@ class TBGallery extends StatelessWidget {
           itemBuilder: (BuildContext context, int itemIndex) {
             return Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: TBDimensions.gallery.imagePadding,
+                horizontal: TBDimensions.galery.imagePadding,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
@@ -48,7 +48,7 @@ class TBGallery extends StatelessWidget {
                           if (loadingProgress != null) {
                             if (loadingProgress.expectedTotalBytes != 0) {
                               return Container(
-                                  padding: EdgeInsets.all(galleryHeight * 0.4),
+                                  padding: EdgeInsets.all(galeryHeight * 0.4),
                                   child: CircularProgressIndicator(
                                       strokeWidth: 3,
                                       color: TBColor.app.lightBlue));
