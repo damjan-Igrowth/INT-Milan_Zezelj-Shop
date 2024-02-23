@@ -78,10 +78,10 @@ class TBTextInput extends StatelessWidget {
         }),
         labelStyle: MaterialStateTextStyle.resolveWith((states) {
           Color color = TBColor.textInput.black;
-          if (states.contains(MaterialState.disabled)) {
-            color = TBColor.textInput.grey;
-          } else if (states.contains(MaterialState.error)) {
+          if (states.contains(MaterialState.error)) {
             color = TBColor.textInput.red;
+          } else if (states.contains(MaterialState.disabled)) {
+            color = TBColor.textInput.grey;
           }
           return TextStyle(
             color: color,
