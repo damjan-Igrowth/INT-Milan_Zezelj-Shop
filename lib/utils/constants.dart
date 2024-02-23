@@ -6,7 +6,6 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
-  static _TBCardDimensions card = _TBCardDimensions();
   static _TBAlertDimensions alert = _TBAlertDimensions();
 }
 
@@ -47,10 +46,4 @@ class _TBAlertDimensions {
   final contentPadding = 16.0;
   final titlePadding = 12.0;
   final borderRadius = 16.0;
-}
-
-class _TBCardDimensions {
-  final contentPadding = 16.0;
-  final contentHeaderPadding = 16.0;
-  final borderRadius = 12.0;
 }
