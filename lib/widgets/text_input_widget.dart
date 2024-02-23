@@ -7,16 +7,23 @@ class TBTextInput extends StatelessWidget {
   final String label;
   final String? Function(String?)? validator;
   final bool? enabled;
+  final bool readOnly;
+  final Widget? suffixIcon;
+  final String? suffixText;
   const TBTextInput(
       {super.key,
       required this.textEditingController,
       required this.label,
       this.validator,
-      this.enabled});
+      this.readOnly = false,
+      this.enabled,
+      this.suffixIcon,
+      this.suffixText});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       enabled: enabled,
       onTapOutside: (event) {
         FocusScope.of(context).unfocus();
@@ -38,6 +45,14 @@ class TBTextInput extends StatelessWidget {
         },
       ),
       decoration: InputDecoration(
+        suffixText: "%",
+        suffixIcon: suffixIcon,
+        suffixIconColor: MaterialStateColor.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return TBColor.textInput.grey;
+          }
+          return TBColor.textInput.lightBlue;
+        }),
         filled: true,
         contentPadding: EdgeInsets.symmetric(
             vertical: TBDimensions.textInput.verticalContentPadding,

@@ -113,12 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     text: "Add Product",
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         TBTextInput(
                           enabled: false,
+                          suffixIcon: Icon(Icons.business_rounded),
                           textEditingController: _textEditingController,
                           label: "Text",
                           validator: (value) {
@@ -132,6 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 20,
                         ),
                         TBTextInput(
+                          // suffixIcon: Icon(Icons.business_rounded),
+                          suffixText: "%",
                           textEditingController: TextEditingController(),
                           label: "Text",
                           validator: (value) {
@@ -143,6 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   TBButton(
                     type: TBButtonType.filled,

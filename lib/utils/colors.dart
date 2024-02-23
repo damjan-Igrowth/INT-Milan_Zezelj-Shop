@@ -59,4 +59,5 @@ class _TBTextInputColor {
   final red = const Color(0xFFFF4242);
   final disabledFillColor = const Color(0xFFF3F4F8);
   final lightGrey = const Color(0xFFC9D2DE);
+  final lightBlue = const Color(0xFF34A4E3);
 }
