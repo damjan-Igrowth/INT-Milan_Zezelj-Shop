@@ -6,11 +6,7 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
-<<<<<<< HEAD
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
-=======
-  static _TBGaleryDimensions galery = _TBGaleryDimensions();
->>>>>>> fe85398 (Added galery widget)
 }
 
 class _TBButtonDimensions {
@@ -45,11 +41,7 @@ class _TBAppBarDimensions {
   final specialTitleFontSize = 23.33;
 }
 
-<<<<<<< HEAD
 class _TBGalleryDimensions {
-=======
-class _TBGaleryDimensions {
->>>>>>> fe85398 (Added galery widget)
   final viewportFraction = 0.9;
   final imagePadding = 8.0;
   final imageBorderRadius = 16.0;
