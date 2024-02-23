@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 
-class TBTextInput extends StatefulWidget {
+class TBTextInput extends StatelessWidget {
   final TextEditingController textEditingController;
   final String label;
   final String? Function(String?)? validator;
@@ -15,38 +15,23 @@ class TBTextInput extends StatefulWidget {
       this.enabled});
 
   @override
-  State<TBTextInput> createState() => _TBTextInputState();
-}
-
-class _TBTextInputState extends State<TBTextInput> {
-  final FocusNode _focusNode = FocusNode();
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: widget.enabled,
+      enabled: enabled,
       onTapOutside: (event) {
-        _focusNode.unfocus();
+        FocusScope.of(context).unfocus();
       },
-      validator: widget.validator,
-      controller: widget.textEditingController,
-      focusNode: _focusNode,
+      validator: validator,
+      controller: textEditingController,
       style: MaterialStateTextStyle.resolveWith(
         (states) {
+          Color color = TBColor.textInput.black;
           if (states.contains(MaterialState.disabled)) {
-            return TextStyle(
-                color: TBColor.textInput.grey,
-                fontFamily: "Inter",
-                fontSize: 16,
-                fontWeight: FontWeight.w600);
+            color = TBColor.textInput.grey;
           }
 
           return TextStyle(
-              color: TBColor.textInput.black,
+              color: color,
               fontFamily: "Inter",
               fontSize: 16,
               fontWeight: FontWeight.w600);
@@ -56,36 +41,33 @@ class _TBTextInputState extends State<TBTextInput> {
         filled: true,
         contentPadding: EdgeInsets.symmetric(
             vertical: TBDimensions.textInput.verticalContentPadding,
-            horizontal: TBDimensions.textInput.verticalContentPadding),
-        labelText: widget.label,
-        labelStyle: MaterialStateTextStyle.resolveWith((states) {
+            horizontal: TBDimensions.textInput.horizontalContentPadding),
+        labelText: label,
+        floatingLabelStyle: MaterialStateTextStyle.resolveWith((states) {
+          Color color = TBColor.textInput.purple;
           if (states.contains(MaterialState.disabled)) {
-            return TextStyle(
-              color: TBColor.textInput.grey,
-              fontFamily: "Inter",
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            );
+            color = TBColor.textInput.grey;
           }
-          if (states.contains(MaterialState.error) &&
-              states.contains(MaterialState.focused)) {
-            return TextStyle(
-              color: TBColor.textInput.red,
-              fontFamily: "Inter",
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            );
-          }
-          if (states.contains(MaterialState.focused)) {
-            return TextStyle(
-              color: TBColor.textInput.purple,
-              fontFamily: "Inter",
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            );
+          if (states.contains(MaterialState.error)) {
+            color = TBColor.textInput.red;
           }
           return TextStyle(
-            color: TBColor.textInput.black,
+            color: color,
+            fontFamily: "Inter",
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          );
+        }),
+        labelStyle: MaterialStateTextStyle.resolveWith((states) {
+          Color color = TBColor.textInput.black;
+          if (states.contains(MaterialState.disabled)) {
+            color = TBColor.textInput.grey;
+          }
+          if (states.contains(MaterialState.error)) {
+            color = TBColor.textInput.red;
+          }
+          return TextStyle(
+            color: color,
             fontFamily: "Inter",
             fontSize: 16,
             fontWeight: FontWeight.w400,

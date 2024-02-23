@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     TBTextInput(
+                      enabled: false,
                       textEditingController: _textEditingController,
                       label: "Text",
                       validator: (value) {
