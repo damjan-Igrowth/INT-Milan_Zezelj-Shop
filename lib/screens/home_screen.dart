@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
@@ -55,22 +56,31 @@ class _HomeScreenState extends State<HomeScreen> {
               TBButton(
                 type: TBButtonType.filled,
                 onPressed: () async {
-                  _selectedCategory = await showModalBottomSheet<String?>(
+                  await showModalBottomSheet<String?>(
                       context: context,
                       builder: (context) => TBPickerList(
-                            items: const [
-                              (Icons.phone, "Smartphones"),
-                              (Icons.laptop, "Laptops"),
-                              (Icons.gamepad, "Video Games"),
-                              (Icons.audio_file, "Audio"),
-                              (Icons.microwave, "Appliance")
-                            ],
-                            title: "Category",
-                            selectedItem: _selectedCategory,
-                            onIconPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ));
+                              items: [
+                                TBPickerListItemModel(
+                                    iconData: Icons.phone, name: "Smartphones"),
+                                TBPickerListItemModel(
+                                    iconData: Icons.laptop, name: "Laptops"),
+                                TBPickerListItemModel(name: "Video Games"),
+                                TBPickerListItemModel(
+                                    iconData: Icons.audio_file, name: "Audio"),
+                                TBPickerListItemModel(
+                                    iconData: Icons.microwave,
+                                    name: "Appliance")
+                              ],
+                              title: "Category",
+                              selectedItem: _selectedCategory,
+                              onIconPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              onItemPressed: (String? value) {
+                                setState(() {
+                                  _selectedCategory = value;
+                                });
+                              }));
                 },
                 text: "Add Product",
               ),

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
 
 class TBPickerList extends StatefulWidget {
   final String title;
-  final List<(IconData, String)> items;
+  final List<TBPickerListItemModel> items;
   final void Function()? onIconPressed;
+  final void Function(String?) onItemPressed;
   final String? selectedItem;
 
-  const TBPickerList({
-    super.key,
-    required this.title,
-    this.onIconPressed,
-    required this.selectedItem,
-    required this.items,
-  });
+  const TBPickerList(
+      {super.key,
+      required this.title,
+      this.onIconPressed,
+      required this.selectedItem,
+      required this.items,
+      required this.onItemPressed});
 
   @override
   State<TBPickerList> createState() => _TBPickerListState();
@@ -62,17 +64,31 @@ class _TBPickerListState extends State<TBPickerList> {
           Expanded(
             child: ListView.builder(
               itemCount: widget.items.length,
-              itemBuilder: (context, index) => _ListTile(
-                iconData: widget.items[index].$1,
-                name: widget.items[index].$2,
-                isSelected: _selectedItem == widget.items[index].$2,
-                onTap: () {
-                  setState(() {
-                    _selectedItem = widget.items[index].$2;
-                  });
-                  Navigator.of(context).pop(_selectedItem);
-                },
-              ),
+              itemBuilder: (context, index) =>
+                  widget.items[index].iconData == null
+                      ? _ListTile(
+                          name: widget.items[index].name,
+                          isSelected: _selectedItem == widget.items[index].name,
+                          onTap: () {
+                            setState(() {
+                              _selectedItem = widget.items[index].name;
+                            });
+                            widget.onItemPressed.call(_selectedItem);
+                            Navigator.pop(context);
+                          },
+                        )
+                      : _ListTile.withIcon(
+                          name: widget.items[index].name,
+                          iconData: widget.items[index].iconData,
+                          isSelected: _selectedItem == widget.items[index].name,
+                          onTap: () {
+                            setState(() {
+                              _selectedItem = widget.items[index].name;
+                            });
+                            widget.onItemPressed.call(_selectedItem);
+                            Navigator.of(context).pop();
+                          },
+                        ),
             ),
           ),
         ],
@@ -84,14 +100,25 @@ class _TBPickerListState extends State<TBPickerList> {
 class _ListTile extends StatefulWidget {
   final void Function()? onTap;
   final bool isSelected;
-  final IconData iconData;
+  final IconData? iconData;
   final String name;
-  const _ListTile(
-      {super.key,
-      this.onTap,
-      required this.isSelected,
-      required this.iconData,
-      required this.name});
+  final bool _withIcon;
+
+  const _ListTile({
+    super.key,
+    this.onTap,
+    required this.isSelected,
+    required this.name,
+  })  : _withIcon = false,
+        iconData = null;
+
+  const _ListTile.withIcon({
+    super.key,
+    this.onTap,
+    required this.isSelected,
+    required this.iconData,
+    required this.name,
+  }) : _withIcon = true;
 
   @override
   State<_ListTile> createState() => _ListTileState();
@@ -111,16 +138,20 @@ class _ListTileState extends State<_ListTile> {
             vertical: TBDimensions.pickerList.itemContentVerticalPadding),
         child: Row(
           children: [
-            Icon(
-              widget.iconData,
-              size: TBDimensions.pickerList.iconSize,
-              color: widget.isSelected
-                  ? TBColor.pickerList.lightBlue
-                  : TBColor.pickerList.grey,
-            ),
-            SizedBox(
-              width: TBDimensions.pickerList.itemContentSpacing,
-            ),
+            widget._withIcon
+                ? Icon(
+                    widget.iconData,
+                    size: TBDimensions.pickerList.iconSize,
+                    color: widget.isSelected
+                        ? TBColor.pickerList.lightBlue
+                        : TBColor.pickerList.grey,
+                  )
+                : Container(),
+            widget._withIcon
+                ? SizedBox(
+                    width: TBDimensions.pickerList.itemContentSpacing,
+                  )
+                : Container(),
             Expanded(
               child: Text(
                 widget.name,
