@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
+import 'package:tech_byte/utils/icons.dart';
 
 class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
@@ -12,18 +13,20 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
   TBAppBar({super.key, required this.title, this.actions, Widget? titleIcon})
       : icon = titleIcon ??
-            Image.asset("assets/app_bar_icon.png",
-                width: TBDimensions.appBar.iconSize,
-                height: TBDimensions.appBar.iconSize),
+            Icon(
+              TBIcons.appIcon,
+              size: TBDimensions.appBar.iconSize,
+            ),
         preferredSize = const Size.fromHeight(60),
         _styled = false;
 
   TBAppBar.styled(
       {super.key, required this.title, this.actions, Widget? titleIcon})
       : icon = titleIcon ??
-            Image.asset("assets/app_bar_icon.png",
-                width: TBDimensions.appBar.iconSize,
-                height: TBDimensions.appBar.iconSize),
+            Icon(
+              TBIcons.appIcon,
+              size: TBDimensions.appBar.iconSize,
+            ),
         preferredSize = const Size.fromHeight(60),
         _styled = true;
 
@@ -37,8 +40,10 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: shouldImplyLeading
           ? IconButton(
               onPressed: () => Navigator.of(context).pop(),
-              icon:
-                  Icon(Icons.chevron_left, size: TBDimensions.appBar.iconSize),
+              icon: Icon(
+                Icons.chevron_left,
+                size: TBDimensions.appBar.iconSize,
+              ),
             )
           : null,
       shape: RoundedRectangleBorder(
@@ -56,7 +61,8 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
                     TBColor.appBar.greenGradientColor,
                     TBColor.appBar.blueGradientColor
                   ]).createShader(
-                      Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                  ),
                   child: icon,
                 ),
                 const SizedBox(width: 5),

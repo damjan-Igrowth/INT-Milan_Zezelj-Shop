@@ -7,6 +7,7 @@ class TBColor {
   static _TBButtonColor button = _TBButtonColor();
   static _TBRatingColor rating = _TBRatingColor();
   static _TBAlertColor alert = _TBAlertColor();
+  static _TBCardColor card = _TBCardColor();
 }
 
 class _TBAppBarColor {
@@ -40,4 +41,11 @@ class _TBAlertColor {
   final lightRed = const Color(0xFFFAD1D1);
   final green = const Color(0xFF18B815);
   final lightGreen = const Color(0xFFD1FADF);
+}
+
+class _TBCardColor {
+  final red = const Color(0XFFE33434);
+  final green = const Color(0XFF43C16E);
+  final black = const Color(0xFF121212);
+  final lightBlue = const Color(0xFF34A4E3);
 }
