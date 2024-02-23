@@ -6,19 +6,21 @@ class TBColor {
   static _TBAppBarColor appBar = _TBAppBarColor();
   static _TBButtonColor button = _TBButtonColor();
   static _TBRatingColor rating = _TBRatingColor();
+  static _TBAlertColor alert = _TBAlertColor();
+  static _TBCardColor card = _TBCardColor();
   static _TBTextInputColor textInput = _TBTextInputColor();
 }
 
 class _TBAppBarColor {
-  final greenGradientColor = Color(0xFF2AE0B1);
-  final blueGradientColor = Color(0xFF048FF1);
+  final greenGradientColor = const Color(0xFF2AE0B1);
+  final blueGradientColor = const Color(0xFF048FF1);
 }
 
 class _TBAppColor {
-  final lightBlue = Color(0xFF34A4E3);
-  final lightBlueGrey = Color(0xFFC9D2DE);
-  final grey = Color(0xFF7B828A);
-  final backgroundColor = Color(0xFFF8F8F8);
+  final lightBlue = const Color(0xFF34A4E3);
+  final lightBlueGrey = const Color(0xFFC9D2DE);
+  final grey = const Color(0xFF7B828A);
+  final backgroundColor = const Color(0xFFF8F8F8);
 }
 
 class _TBButtonColor {
@@ -33,6 +35,21 @@ class _TBRatingColor {
     const Color(0xFFFFC046),
     const Color(0xFFC0C0C0)
   ];
+}
+
+class _TBAlertColor {
+  final red = const Color(0xFFDA0000);
+  final lightRed = const Color(0xFFFAD1D1);
+  final green = const Color(0xFF18B815);
+  final lightGreen = const Color(0xFFD1FADF);
+}
+
+class _TBCardColor {
+  final red = const Color(0XFFE33434);
+  final green = const Color(0XFF43C16E);
+  final black = const Color(0xFF121212);
+  final lightBlue = const Color(0xFF34A4E3);
+  final border = const Color(0xFFF3F3F3);
 }
 
 class _TBTextInputColor {
