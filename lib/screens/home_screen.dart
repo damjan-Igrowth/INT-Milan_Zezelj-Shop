@@ -136,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 20,
                         ),
                         TBTextInput(
+                          enabled: false,
                           // suffixIcon: Icon(Icons.business_rounded),
                           suffixText: "%",
                           textEditingController: TextEditingController(),
