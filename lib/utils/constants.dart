@@ -12,6 +12,7 @@ class TBDimensions {
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
   static _TBTextInputDimensions textInput = _TBTextInputDimensions();
+  static _TBHomeScreenDimensions homeScreen = _TBHomeScreenDimensions();
 }
 
 class _TBButtonDimensions {
@@ -91,4 +92,10 @@ class _TBTextInputDimensions {
   final borderRadius = 12.0;
   final verticalContentPadding = 10.0;
   final horizontalContentPadding = 20.0;
+}
+
+class _TBHomeScreenDimensions {
+  final contentPadding = 20.0;
+  final separatorHeight = 16.0;
+  final listBottomPadding = 100.0;
 }

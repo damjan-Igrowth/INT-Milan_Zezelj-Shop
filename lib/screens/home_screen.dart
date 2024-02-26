@@ -3,12 +3,9 @@ import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
-import 'package:tech_byte/utils/icons.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
-import 'package:tech_byte/widgets/picker_list_widget.dart';
-import 'package:tech_byte/widgets/select_input_widget.dart';
-import 'package:tech_byte/widgets/text_input_widget.dart';
+import 'package:tech_byte/widgets/product_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,10 +15,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String? _selectedCategory;
+  List<TBProductModel> products = [
+    product1,
+    product2,
+    product3,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: TBDimensions.homeScreen.contentPadding),
+        child: TBButton(text: "Add product", type: TBButtonType.filled),
+      ),
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar.styled(
         title: RichText(
@@ -36,64 +44,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              TBIcons.edit,
-              color: TBColor.appBar.blueGradientColor,
-            ),
-            onPressed: () {},
-          )
-        ],
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TBSelectInput(
-                    label: "Category",
-                    enabled: true,
-                    selectedItem: "Apple",
-                    suffixIcon: Icon(Icons.business),
-                    // suffixText: "%",
-                    items: [
-                      TBPickerListItemModel(name: "Phone"),
-                      TBPickerListItemModel(name: "Laptop"),
-                      TBPickerListItemModel(
-                          name: "Apple", iconData: Icons.business_sharp)
-                    ],
-                    onTap: (value) {
-                      setState(
-                        () {
-                          _selectedCategory = value;
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TBButton(
-                    type: TBButtonType.filled,
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
-                    },
-                    text: "Add Product",
-                  ),
-                ],
+        padding: EdgeInsets.symmetric(
+            horizontal: TBDimensions.homeScreen.contentPadding),
+        child: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.only(
+                      top: TBDimensions.homeScreen.contentPadding,
+                      bottom: TBDimensions.homeScreen.listBottomPadding),
+                  separatorBuilder: (context, index) =>
+                      SizedBox(height: TBDimensions.homeScreen.separatorHeight),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) => TBProductCard(
+                      name: products[index].name,
+                      category: products[index].category,
+                      price: products[index].price,
+                      discount: products[index].discount,
+                      image: products[index].image,
+                      rating: products[index].rating,
+                      onStock: products[index].onStock),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
