@@ -6,6 +6,7 @@ class TBColor {
   static _TBAppBarColor appBar = _TBAppBarColor();
   static _TBButtonColor button = _TBButtonColor();
   static _TBRatingColor rating = _TBRatingColor();
+  static _TBPickeListColor pickerList = _TBPickeListColor();
   static _TBAlertColor alert = _TBAlertColor();
   static _TBCardColor card = _TBCardColor();
   static _TBTextInputColor textInput = _TBTextInputColor();
@@ -36,6 +37,13 @@ class _TBRatingColor {
     const Color(0xFFFFC046),
     const Color(0xFFC0C0C0)
   ];
+}
+
+class _TBPickeListColor {
+  final black = const Color(0xFF181E25);
+  final lightBlue = const Color(0xFF34A4E3);
+  final grey = const Color(0xFF8C8C8C);
+  final selectedItemBackground = const Color(0xFFE1F4FF);
 }
 
 class _TBAlertColor {

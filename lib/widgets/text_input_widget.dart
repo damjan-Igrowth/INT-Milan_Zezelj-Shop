@@ -10,6 +10,7 @@ class TBTextInput extends StatelessWidget {
   final bool readOnly;
   final Widget? suffixIcon;
   final String? suffixText;
+  final void Function()? onTap;
   const TBTextInput(
       {super.key,
       required this.textEditingController,
@@ -18,11 +19,13 @@ class TBTextInput extends StatelessWidget {
       this.readOnly = false,
       this.enabled,
       this.suffixIcon,
-      this.suffixText});
+      this.suffixText,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
       readOnly: readOnly,
       enabled: enabled,
       onTapOutside: (event) {
