@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/utils/constants.dart';
+import 'package:tech_byte/utils/validators.dart';
 import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
@@ -50,6 +51,13 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
   @override
   void dispose() {
     _nameTextEditingController.dispose();
+    _descriptionTextEditingController.dispose();
+    _discountTextEditingController.dispose();
+    _priceTextEditingController.dispose();
+    if (_formKey.currentState != null) {
+      _formKey.currentState!.dispose();
+    }
+
     super.dispose();
   }
 
@@ -66,7 +74,8 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
               TBGallery.url(
                 images: [widget.selectedProduct.image],
               ),
-              SizedBox(height: 20.0),
+              SizedBox(
+                  height: TBDimensions.productEditDetailsScreen.contentSpacing),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal:
@@ -78,19 +87,11 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                       TBTextInput(
                         textEditingController: _nameTextEditingController,
                         label: "Product name",
-                        validator: (value) {
-                          if (value == null) {
-                            return "Cannot be empty!";
-                          } else if (value.isEmpty) {
-                            return "Cannot be empty!";
-                          } else if (value.contains(" ") &&
-                              !value.contains(RegExp(r'[A-Z]|[a-z]|[1-9]'))) {
-                            return "Cannot be empty!";
-                          }
-                          return null;
-                        },
+                        validator: textInputValidator,
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(
+                          height: TBDimensions
+                              .productEditDetailsScreen.contentSpacing),
                       TBSelectInput(
                         label: "Company",
                         selectedItem: _companySelection,
@@ -100,14 +101,7 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                           });
                         },
                         suffixIcon: Icon(Icons.business_rounded),
-                        validator: (value) {
-                          if (value == null) {
-                            return "Cannot be empty!";
-                          } else if (value.isEmpty) {
-                            return "Cannot be empty!";
-                          }
-                          return null;
-                        },
+                        validator: selectInputValidator,
                         items: [
                           TBPickerListItemModel(name: "Apple"),
                           TBPickerListItemModel(name: "Samsung"),
@@ -116,7 +110,9 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                           TBPickerListItemModel(name: "Oneplus")
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(
+                          height: TBDimensions
+                              .productEditDetailsScreen.contentSpacing),
                       TBSelectInput(
                         label: "Category",
                         selectedItem: _categorySelection,
@@ -126,14 +122,7 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                           });
                         },
                         suffixIcon: Icon(Icons.category_outlined),
-                        validator: (value) {
-                          if (value == null) {
-                            return "Cannot be empty!";
-                          } else if (value.isEmpty) {
-                            return "Cannot be empty!";
-                          }
-                          return null;
-                        },
+                        validator: selectInputValidator,
                         items: [
                           TBPickerListItemModel(name: "Smartphones"),
                           TBPickerListItemModel(name: "Laptops"),
@@ -142,26 +131,20 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                           TBPickerListItemModel(name: "Appliances")
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(
+                          height: TBDimensions
+                              .productEditDetailsScreen.contentSpacing),
                       TBTextInput(
                         maxLines: 6,
                         minLines: 6,
                         textEditingController:
                             _descriptionTextEditingController,
                         label: "Description",
-                        validator: (value) {
-                          if (value == null) {
-                            return "Cannot be empty!";
-                          } else if (value.isEmpty) {
-                            return "Cannot be empty!";
-                          } else if (value.contains(" ") &&
-                              !value.contains(RegExp(r'[A-Z]|[a-z]|[1-9]'))) {
-                            return "Cannot be empty!";
-                          }
-                          return null;
-                        },
+                        validator: textInputValidator,
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(
+                          height: TBDimensions
+                              .productEditDetailsScreen.contentSpacing),
                       Row(
                         children: [
                           Expanded(
@@ -170,44 +153,23 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                                   _discountTextEditingController,
                               label: "Discount",
                               suffixText: "%",
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Cannot be empty!";
-                                } else if (value.isEmpty) {
-                                  return "Cannot be empty!";
-                                } else if (value.contains(" ") &&
-                                    !value.contains(
-                                        RegExp(r'[A-Z]|[a-z]|[1-9]'))) {
-                                  return "Cannot be empty!";
-                                }
-                                return null;
-                              },
+                              validator: textInputValidator,
                             ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
                             child: TBTextInput(
-                              textEditingController:
-                                  _priceTextEditingController,
-                              label: "Price",
-                              suffixText: "\$",
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Cannot be empty!";
-                                } else if (value.isEmpty) {
-                                  return "Cannot be empty!";
-                                } else if (value.contains(" ") &&
-                                    !value.contains(
-                                        RegExp(r'[A-Z]|[a-z]|[1-9]'))) {
-                                  return "Cannot be empty!";
-                                }
-                                return null;
-                              },
-                            ),
+                                textEditingController:
+                                    _priceTextEditingController,
+                                label: "Price",
+                                suffixText: "\$",
+                                validator: textInputValidator),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(
+                          height: TBDimensions
+                              .productEditDetailsScreen.contentSpacing),
                       TBButton(
                         text: "Save changes",
                         type: TBButtonType.filled,

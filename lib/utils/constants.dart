@@ -15,6 +15,8 @@ class TBDimensions {
   static _TBHomeScreenDimensions homeScreen = _TBHomeScreenDimensions();
   static _TBProductDetailsScreenDimensions productDetailsScreen =
       _TBProductDetailsScreenDimensions();
+  static _TBProductEditDetailsScreenDimensions productEditDetailsScreen =
+      _TBProductEditDetailsScreenDimensions();
 }
 
 class _TBButtonDimensions {
@@ -105,4 +107,8 @@ class _TBHomeScreenDimensions {
 class _TBProductDetailsScreenDimensions {
   final contentPadding = 20.0;
   final contentBottomPadding = 22.0;
+}
+
+class _TBProductEditDetailsScreenDimensions {
+  final contentSpacing = 20.0;
 }
