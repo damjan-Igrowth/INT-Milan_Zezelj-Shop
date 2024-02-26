@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/models/product_model.dart';
-import 'package:tech_byte/screens/product_detail_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
@@ -96,20 +95,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   TBButton(
                     type: TBButtonType.filled,
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TBProductDetailScreen(
-                                selectedProduct: product,
-                              )));
-                      // showDialog(
-                      //     barrierDismissible: false,
-                      //     context: context,
-                      //     builder: (context) => TBAlertDialog.error(
-                      //           onPressed: () {
-                      //             Navigator.of(context).pop();
-                      //           },
-                      //           message:
-                      //               "Something went wrong while editing product!",
-                      //         ));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const HomeScreen()));
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => TBAlertDialog.error(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                message:
+                                    "Something went wrong while editing product!",
+                              ));
                     },
                     text: "Add Product",
                   ),
