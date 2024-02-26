@@ -6,10 +6,13 @@ class TBDimensions {
   static _TBSectionDimensions section = _TBSectionDimensions();
   static _TBRatingDimensions rating = _TBRatingDimensions();
   static _TBAppBarDimensions appBar = _TBAppBarDimensions();
+  static _TBPickerListDimensions pickerList = _TBPickerListDimensions();
   static _TBAlertDimensions alert = _TBAlertDimensions();
   static _TBCardDimensions card = _TBCardDimensions();
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
+  static _TBTextInputDimensions textInput = _TBTextInputDimensions();
+  static _TBHomeScreenDimensions homeScreen = _TBHomeScreenDimensions();
   static _TBProductDetailsScreenDimensions productDetailsScreen =
       _TBProductDetailsScreenDimensions();
 }
@@ -46,6 +49,15 @@ class _TBAppBarDimensions {
   final specialTitleFontSize = 23.33;
 }
 
+class _TBPickerListDimensions {
+  final borderRadius = 16.0;
+  final headerPadding = 20.0;
+  final iconSize = 20.0;
+  final itemContentSpacing = 20.0;
+  final itemContentHorizontalPadding = 20.0;
+  final itemContentVerticalPadding = 16.0;
+}
+
 class _TBAlertDimensions {
   final iconSize = 24.0;
   final contentPadding = 16.0;
@@ -76,6 +88,18 @@ class _TBProductCardDimensions {
   final imageSize = 79.0;
   final circularIndicatorSize = 20.0;
   final circularIndicatorWidth = 3.0;
+}
+
+class _TBTextInputDimensions {
+  final borderRadius = 12.0;
+  final verticalContentPadding = 10.0;
+  final horizontalContentPadding = 20.0;
+}
+
+class _TBHomeScreenDimensions {
+  final contentPadding = 20.0;
+  final separatorHeight = 16.0;
+  final listBottomPadding = 100.0;
 }
 
 class _TBProductDetailsScreenDimensions {
