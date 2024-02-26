@@ -11,6 +11,7 @@ import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
 import 'package:tech_byte/widgets/gallery_widget.dart';
 import 'package:tech_byte/widgets/product_card_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
+import 'package:tech_byte/widgets/text_input_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,6 +21,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _textEditingController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +110,57 @@ class _HomeScreenState extends State<HomeScreen> {
                                 message:
                                     "Something went wrong while editing product!",
                               ));
+                    },
+                    text: "Add Product",
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TBTextInput(
+                          enabled: false,
+                          suffixIcon: Icon(Icons.business_rounded),
+                          textEditingController: _textEditingController,
+                          label: "Text",
+                          validator: (value) {
+                            if (value == "") {
+                              return "Cant be empty";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TBTextInput(
+                          enabled: false,
+                          // suffixIcon: Icon(Icons.business_rounded),
+                          suffixText: "%",
+                          textEditingController: TextEditingController(),
+                          label: "Text",
+                          validator: (value) {
+                            if (value == "") {
+                              return "Cant be empty";
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TBButton(
+                    type: TBButtonType.filled,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                      }
                     },
                     text: "Add Product",
                   ),

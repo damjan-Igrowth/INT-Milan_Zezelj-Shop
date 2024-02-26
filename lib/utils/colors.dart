@@ -8,6 +8,7 @@ class TBColor {
   static _TBRatingColor rating = _TBRatingColor();
   static _TBAlertColor alert = _TBAlertColor();
   static _TBCardColor card = _TBCardColor();
+  static _TBTextInputColor textInput = _TBTextInputColor();
 }
 
 class _TBAppBarColor {
@@ -49,4 +50,14 @@ class _TBCardColor {
   final black = const Color(0xFF121212);
   final lightBlue = const Color(0xFF34A4E3);
   final border = const Color(0xFFF3F3F3);
+}
+
+class _TBTextInputColor {
+  final grey = const Color(0xFF7B828A);
+  final black = const Color(0xFF181E25);
+  final purple = const Color(0xFF7E44F8);
+  final red = const Color(0xFFFF4242);
+  final disabledFillColor = const Color(0xFFF3F4F8);
+  final lightGrey = const Color(0xFFC9D2DE);
+  final lightBlue = const Color(0xFF34A4E3);
 }

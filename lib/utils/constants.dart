@@ -10,6 +10,7 @@ class TBDimensions {
   static _TBCardDimensions card = _TBCardDimensions();
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
+  static _TBTextInputDimensions textInput = _TBTextInputDimensions();
 }
 
 class _TBButtonDimensions {
@@ -74,4 +75,10 @@ class _TBProductCardDimensions {
   final imageSize = 79.0;
   final circularIndicatorSize = 20.0;
   final circularIndicatorWidth = 3.0;
+}
+
+class _TBTextInputDimensions {
+  final borderRadius = 12.0;
+  final verticalContentPadding = 10.0;
+  final horizontalContentPadding = 20.0;
 }
