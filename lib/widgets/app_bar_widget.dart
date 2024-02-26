@@ -34,6 +34,7 @@ class TBAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     bool shouldImplyLeading = Navigator.of(context).canPop();
     return AppBar(
+      scrolledUnderElevation: 0,
       backgroundColor: Colors.white,
       centerTitle: false,
       titleSpacing: shouldImplyLeading ? -5 : null,

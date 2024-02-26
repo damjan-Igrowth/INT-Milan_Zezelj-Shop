@@ -80,4 +80,5 @@ class _TBProductCardDimensions {
 class _TBHomeScreenDimensions {
   final contentPadding = 20.0;
   final separatorHeight = 16.0;
+  final listBottomPadding = 100.0;
 }

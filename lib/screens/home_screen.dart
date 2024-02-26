@@ -14,12 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GlobalKey buttonGlobalKey = GlobalKey();
   List<TBProductModel> products = [
     product1,
     product2,
     product3,
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: TBDimensions.homeScreen.contentPadding),
-        child: TBButton(
-            key: buttonGlobalKey,
-            text: "Add product",
-            type: TBButtonType.filled),
+        child: TBButton(text: "Add product", type: TBButtonType.filled),
       ),
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar.styled(
@@ -56,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: ListView.separated(
                   padding: EdgeInsets.only(
-                    top: TBDimensions.homeScreen.contentPadding,
-                  ),
+                      top: TBDimensions.homeScreen.contentPadding,
+                      bottom: TBDimensions.homeScreen.listBottomPadding),
                   separatorBuilder: (context, index) =>
                       SizedBox(height: TBDimensions.homeScreen.separatorHeight),
                   itemCount: products.length,
