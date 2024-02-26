@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/models/product_model.dart';
+import 'package:tech_byte/screens/product_edit_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
@@ -10,9 +11,11 @@ import 'package:tech_byte/widgets/gallery_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
 
 class TBProductDetailScreen extends StatelessWidget {
+  final void Function(TBProductModel) onEdit;
   final TBProductModel selectedProduct;
 
-  const TBProductDetailScreen({super.key, required this.selectedProduct});
+  const TBProductDetailScreen(
+      {super.key, required this.selectedProduct, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,11 @@ class TBProductDetailScreen extends StatelessWidget {
         title: Text("Product details"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => TBProductEditScreen(
+                      selectedProduct: selectedProduct, onEdit: onEdit)));
+            },
             icon: Icon(
               TBIcons.edit,
               color: TBColor.appBar.blueGradientColor,

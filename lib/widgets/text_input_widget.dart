@@ -11,6 +11,8 @@ class TBTextInput extends StatelessWidget {
   final Widget? suffixIcon;
   final String? suffixText;
   final void Function()? onTap;
+  final int? maxLines;
+  final int? minLines;
   const TBTextInput(
       {super.key,
       required this.textEditingController,
@@ -20,11 +22,15 @@ class TBTextInput extends StatelessWidget {
       this.enabled,
       this.suffixIcon,
       this.suffixText,
-      this.onTap});
+      this.onTap,
+      this.maxLines,
+      this.minLines});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      minLines: minLines,
+      maxLines: maxLines ?? 1,
       onTap: onTap,
       readOnly: readOnly,
       enabled: enabled,

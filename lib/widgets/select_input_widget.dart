@@ -11,6 +11,7 @@ class TBSelectInput extends StatefulWidget {
   final bool enabled;
   final Widget? suffixIcon;
   final String? suffixText;
+  final String? Function(String?)? validator;
 
   const TBSelectInput(
       {super.key,
@@ -20,7 +21,8 @@ class TBSelectInput extends StatefulWidget {
       required this.items,
       this.enabled = true,
       this.suffixIcon,
-      this.suffixText});
+      this.suffixText,
+      this.validator});
 
   @override
   State<TBSelectInput> createState() => _TBSelectInputState();
@@ -47,6 +49,7 @@ class _TBSelectInputState extends State<TBSelectInput> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: TBTextInput(
+        validator: widget.validator,
         enabled: widget.enabled,
         suffixIcon: widget.suffixIcon,
         suffixText: widget.suffixText,
