@@ -80,4 +80,5 @@ class _TBProductCardDimensions {
 
 class _TBProductDetailsScreenDimensions {
   final contentPadding = 20.0;
+  final contentBottomPadding = 22.0;
 }

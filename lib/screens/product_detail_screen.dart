@@ -53,7 +53,11 @@ class TBProductDetailScreen extends StatelessWidget {
                       content: TBAvailabilityCard(
                         category: selectedProduct.category,
                         onStock: selectedProduct.onStock,
-                      ))
+                      )),
+                  SizedBox(
+                    height:
+                        TBDimensions.productDetailsScreen.contentBottomPadding,
+                  )
                 ],
               ),
             ),
