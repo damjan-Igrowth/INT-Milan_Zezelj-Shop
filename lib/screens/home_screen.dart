@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tech_byte/models/product_model.dart';
+import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/icons.dart';
@@ -7,11 +7,8 @@ import 'package:tech_byte/widgets/alert_dialog_widget.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/availability_card_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
-import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
-import 'package:tech_byte/widgets/gallery_widget.dart';
-import 'package:tech_byte/widgets/product_card_widget.dart';
-import 'package:tech_byte/widgets/section_widget.dart';
-import 'package:tech_byte/widgets/text_input_widget.dart';
+import 'package:tech_byte/widgets/picker_list_widget.dart';
+import 'package:tech_byte/widgets/rating_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,8 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _textEditingController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  String? _selectedCategory;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,119 +50,45 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TBProductCard(
-                    category: product.category,
-                    discount: product.discount,
-                    image: product.image,
-                    name: product.name,
-                    onStock: product.onStock,
-                    price: product.price,
-                    rating: product.rating,
-                    onTap: () {},
-                  ),
-                  TBSection(
-                      title: "Availability",
-                      content: TBAvailabilityCard(
-                        category: product.category,
-                        onStock: product.onStock,
-                      )),
-                  TBGallery.url(
-                    images: const [
-                      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
-                      "https://upload.wikimedia.org/wikipedia/commons/a/a8/TEIDE.JPG",
-                    ],
-                  ),
-                  TBGallery.asset(
-                    images: const [
-                      "assets/iphone_image.png",
-                    ],
-                  ),
-                  TBSection(
-                    title: "Details",
-                    content: TBDetailOverviewCard(
-                      name: product.name,
-                      company: product.company,
-                      description: product.description,
-                      discount: product.discount,
-                      price: product.price,
-                      rating: product.rating,
-                    ),
-                  ),
-                  TBButton(
-                    type: TBButtonType.filled,
-                    onPressed: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const HomeScreen()));
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) => TBAlertDialog.error(
-                                onPressed: () {
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TBRating(rating: 5),
+                TBButton(
+                  type: TBButtonType.filled,
+                  onPressed: () async {
+                    await showModalBottomSheet<String?>(
+                        context: context,
+                        builder: (context) => TBPickerList(
+                                items: [
+                                  TBPickerListItemModel(
+                                      iconData: Icons.phone,
+                                      name: "Smartphones"),
+                                  TBPickerListItemModel(
+                                      iconData: Icons.laptop, name: "Laptops"),
+                                  TBPickerListItemModel(name: "Video Games"),
+                                  TBPickerListItemModel(
+                                      iconData: Icons.audio_file,
+                                      name: "Audio"),
+                                  TBPickerListItemModel(
+                                      iconData: Icons.microwave,
+                                      name: "Appliance")
+                                ],
+                                title: "Category",
+                                selectedItem: _selectedCategory,
+                                onIconPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                message:
-                                    "Something went wrong while editing product!",
-                              ));
-                    },
-                    text: "Add Product",
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        TBTextInput(
-                          enabled: false,
-                          suffixIcon: Icon(Icons.business_rounded),
-                          textEditingController: _textEditingController,
-                          label: "Text",
-                          validator: (value) {
-                            if (value == "") {
-                              return "Cant be empty";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TBTextInput(
-                          enabled: false,
-                          // suffixIcon: Icon(Icons.business_rounded),
-                          suffixText: "%",
-                          textEditingController: TextEditingController(),
-                          label: "Text",
-                          validator: (value) {
-                            if (value == "") {
-                              return "Cant be empty";
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TBButton(
-                    type: TBButtonType.filled,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
-                      }
-                    },
-                    text: "Add Product",
-                  ),
-                ],
-              ),
-            ),
+                                onItemPressed: (String? value) {
+                                  setState(() {
+                                    _selectedCategory = value;
+                                  });
+                                }));
+                  },
+                  text: "Add Product",
+                ),
+              ],
+            )),
           ),
         ),
       ),
