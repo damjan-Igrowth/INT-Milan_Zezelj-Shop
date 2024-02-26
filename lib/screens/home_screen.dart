@@ -16,22 +16,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey buttonGlobalKey = GlobalKey();
   List<TBProductModel> products = [
-    product,
-    product,
-    product,
-    product,
-    product,
-    product,
-    product,
-    product,
-    product
+    product1,
+    product2,
+    product3,
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(
+            horizontal: TBDimensions.homeScreen.contentPadding),
         child: TBButton(
             key: buttonGlobalKey,
             text: "Add product",
@@ -53,16 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(
+            horizontal: TBDimensions.homeScreen.contentPadding),
         child: Center(
           child: Column(
             children: [
               Expanded(
                 child: ListView.separated(
                   padding: EdgeInsets.only(
-                    top: 20,
+                    top: TBDimensions.homeScreen.contentPadding,
                   ),
-                  separatorBuilder: (context, index) => SizedBox(height: 16),
+                  separatorBuilder: (context, index) =>
+                      SizedBox(height: TBDimensions.homeScreen.separatorHeight),
                   itemCount: products.length,
                   itemBuilder: (context, index) => TBProductCard(
                       name: products[index].name,

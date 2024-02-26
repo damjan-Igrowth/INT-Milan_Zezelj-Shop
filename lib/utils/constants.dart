@@ -10,6 +10,7 @@ class TBDimensions {
   static _TBCardDimensions card = _TBCardDimensions();
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
+  static _TBHomeScreenDimensions homeScreen = _TBHomeScreenDimensions();
 }
 
 class _TBButtonDimensions {
@@ -74,4 +75,9 @@ class _TBProductCardDimensions {
   final imageSize = 79.0;
   final circularIndicatorSize = 20.0;
   final circularIndicatorWidth = 3.0;
+}
+
+class _TBHomeScreenDimensions {
+  final contentPadding = 20.0;
+  final separatorHeight = 16.0;
 }
