@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
+import 'package:tech_byte/screens/product_detail_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/widgets/app_bar_widget.dart';

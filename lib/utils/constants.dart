@@ -13,6 +13,8 @@ class TBDimensions {
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
   static _TBTextInputDimensions textInput = _TBTextInputDimensions();
   static _TBHomeScreenDimensions homeScreen = _TBHomeScreenDimensions();
+  static _TBProductDetailsScreenDimensions productDetailsScreen =
+      _TBProductDetailsScreenDimensions();
 }
 
 class _TBButtonDimensions {
@@ -98,4 +100,9 @@ class _TBHomeScreenDimensions {
   final contentPadding = 20.0;
   final separatorHeight = 16.0;
   final listBottomPadding = 100.0;
+}
+
+class _TBProductDetailsScreenDimensions {
+  final contentPadding = 20.0;
+  final contentBottomPadding = 22.0;
 }
