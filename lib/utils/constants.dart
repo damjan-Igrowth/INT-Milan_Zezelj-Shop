@@ -12,6 +12,7 @@ class TBDimensions {
   static _TBGalleryDimensions gallery = _TBGalleryDimensions();
   static _TBProductCardDimensions productCard = _TBProductCardDimensions();
   static _TBTextInputDimensions textInput = _TBTextInputDimensions();
+  static _TBPickerListDimensions pickerList = _TBPickerListDimensions();
 }
 
 class _TBButtonDimensions {
@@ -91,4 +92,13 @@ class _TBTextInputDimensions {
   final borderRadius = 12.0;
   final verticalContentPadding = 10.0;
   final horizontalContentPadding = 20.0;
+}
+
+class _TBPickerListDimensions {
+  final borderRadius = 16.0;
+  final headerPadding = 20.0;
+  final iconSize = 20.0;
+  final itemContentSpacing = 20.0;
+  final itemContentHorizontalPadding = 20.0;
+  final itemContentVerticalPadding = 16.0;
 }
