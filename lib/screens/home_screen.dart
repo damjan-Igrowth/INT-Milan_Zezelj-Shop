@@ -57,21 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Form(
-                    key: _formKey,
-                    child: TBTextInput(
-                      enabled: false,
-                      textEditingController: _textEditingController,
-                      label: "Text",
-                      validator: (p0) {
-                        if (p0 == "") {
-                          return "cant be empty";
-                        }
-                        return null;
-                      },
-                      suffixIcon: Icon(Icons.abc),
-                    ),
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -101,10 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   TBButton(
                     type: TBButtonType.filled,
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
-                      }
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
                     },
                     text: "Add Product",
                   ),
