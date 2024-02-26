@@ -51,7 +51,9 @@ class TBTextInput extends StatelessWidget {
         suffixText: suffixText,
         suffixIcon: suffixIcon,
         suffixIconColor: MaterialStateColor.resolveWith((states) {
-          if (states.contains(MaterialState.disabled)) {
+          if (states.contains(MaterialState.error)) {
+            return TBColor.textInput.red;
+          } else if (states.contains(MaterialState.disabled)) {
             return TBColor.textInput.grey;
           }
           return TBColor.textInput.lightBlue;
@@ -63,11 +65,10 @@ class TBTextInput extends StatelessWidget {
         labelText: label,
         floatingLabelStyle: MaterialStateTextStyle.resolveWith((states) {
           Color color = TBColor.textInput.black;
-
-          if (states.contains(MaterialState.disabled)) {
-            color = TBColor.textInput.grey;
-          } else if (states.contains(MaterialState.error)) {
+          if (states.contains(MaterialState.error)) {
             color = TBColor.textInput.red;
+          } else if (states.contains(MaterialState.disabled)) {
+            color = TBColor.textInput.grey;
           } else if (states.contains(MaterialState.focused)) {
             color = TBColor.textInput.purple;
           }
@@ -80,10 +81,10 @@ class TBTextInput extends StatelessWidget {
         }),
         labelStyle: MaterialStateTextStyle.resolveWith((states) {
           Color color = TBColor.textInput.black;
-          if (states.contains(MaterialState.disabled)) {
-            color = TBColor.textInput.grey;
-          } else if (states.contains(MaterialState.error)) {
+          if (states.contains(MaterialState.error)) {
             color = TBColor.textInput.red;
+          } else if (states.contains(MaterialState.disabled)) {
+            color = TBColor.textInput.grey;
           }
           return TextStyle(
             color: color,
