@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/screens/product_detail_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
@@ -29,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: TBDimensions.homeScreen.contentPadding),
-        child: TBButton(text: "Add product", type: TBButtonType.filled),
+        child: const TBButton(text: "Add product", type: TBButtonType.filled),
       ),
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar.styled(
@@ -61,6 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: TBDimensions.homeScreen.separatorHeight),
                   itemCount: products.length,
                   itemBuilder: (context, index) => TBProductCard(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TBProductDetailScreen(
+                              onEdit: (TBProductModel editedProduct) {
+                                setState(() {
+                                  products[index] = editedProduct;
+                                });
+                              },
+                              selectedProduct: products[index]))),
                       name: products[index].name,
                       category: products[index].category,
                       price: products[index].price,

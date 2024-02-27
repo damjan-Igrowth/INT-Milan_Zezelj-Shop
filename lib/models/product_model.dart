@@ -9,10 +9,21 @@ class TBProductModel {
   double rating;
   String image;
 
+  TBProductModel(
+      {required this.name,
+      required this.company,
+      required this.category,
+      required this.description,
+      required this.price,
+      required this.discount,
+      required this.onStock,
+      required this.rating,
+      required this.image});
+
   TBProductModel.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         company = json["company"],
-        category = json["company"],
+        category = json["category"],
         description = json["description"],
         price = json["price"],
         discount = json["discount"],
