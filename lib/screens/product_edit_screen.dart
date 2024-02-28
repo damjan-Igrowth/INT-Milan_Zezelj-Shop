@@ -5,6 +5,7 @@ import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
 import 'package:tech_byte/providers/product_provider.dart';
+import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/validators.dart';
 import 'package:tech_byte/widgets/alert_dialog_widget.dart';
@@ -40,6 +41,21 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    _nameTextEditingController.text =
+        ref.read(productProvider(widget.id)).value!.name;
+    _companySelection = ref.read(productProvider(widget.id)).value!.company;
+    _categorySelection = ref.read(productProvider(widget.id)).value!.category;
+    _descriptionTextEditingController.text =
+        ref.read(productProvider(widget.id)).value!.description;
+    _discountTextEditingController.text =
+        ref.read(productProvider(widget.id)).value!.discount.toStringAsFixed(2);
+    _priceTextEditingController.text =
+        ref.read(productProvider(widget.id)).value!.price.toStringAsFixed(2);
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _nameTextEditingController.dispose();
     _descriptionTextEditingController.dispose();
@@ -57,26 +73,14 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
     AsyncValue<TBProductModel> selectedProduct =
         ref.watch(productProvider(widget.id));
 
-    if (selectedProduct.hasValue) {
-      _nameTextEditingController.text = selectedProduct.value!.name;
-      _companySelection = selectedProduct.value!.company;
-      _categorySelection = selectedProduct.value!.category;
-      _descriptionTextEditingController.text =
-          selectedProduct.value!.description;
-      _discountTextEditingController.text =
-          selectedProduct.value!.discount.toStringAsFixed(2);
-      _priceTextEditingController.text =
-          selectedProduct.value!.price.toStringAsFixed(2);
-    }
-
     return Scaffold(
       appBar: TBAppBar(
         title: Text("Edit product"),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: switch (selectedProduct) {
-            AsyncData(:final value) => Column(
+        child: switch (selectedProduct) {
+          AsyncData(:final value) => SingleChildScrollView(
+              child: Column(
                 children: [
                   TBGallery.url(
                     images: [value.image],
@@ -248,8 +252,10 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                   ),
                 ],
               ),
-            AsyncError() => Text("Oops, something went wrong!"),
-            AsyncLoading(:final value) => Column(
+            ),
+          AsyncError() => Text("Oops, something went wrong!"),
+          AsyncLoading(:final value) => SingleChildScrollView(
+              child: Column(
                 children: [
                   TBGallery.url(
                     images: [value!.image],
@@ -418,9 +424,15 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                   ),
                 ],
               ),
-            _ => CircularProgressIndicator()
-          },
-        ),
+            ),
+          _ => SizedBox(
+              width: MediaQuery.textScalerOf(context).scale(100),
+              height: MediaQuery.textScalerOf(context).scale(100),
+              child: CircularProgressIndicator(
+                color: TBColor.app.lightBlue,
+              ),
+            ),
+        },
       ),
     );
   }
