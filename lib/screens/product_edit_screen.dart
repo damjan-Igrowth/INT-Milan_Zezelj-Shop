@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
+import 'package:tech_byte/providers/product_list_provider.dart';
+import 'package:tech_byte/providers/product_provider.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/validators.dart';
 import 'package:tech_byte/widgets/alert_dialog_widget.dart';
@@ -10,17 +13,18 @@ import 'package:tech_byte/widgets/gallery_widget.dart';
 import 'package:tech_byte/widgets/select_input_widget.dart';
 import 'package:tech_byte/widgets/text_input_widget.dart';
 
-class TBProductEditScreen extends StatefulWidget {
+class TBProductEditScreen extends ConsumerStatefulWidget {
   final void Function(TBProductModel) onEdit;
   final TBProductModel selectedProduct;
   const TBProductEditScreen(
       {super.key, required this.selectedProduct, required this.onEdit});
 
   @override
-  State<TBProductEditScreen> createState() => _TBProductEditScreenState();
+  ConsumerState<TBProductEditScreen> createState() =>
+      _TBProductEditScreenState();
 }
 
-class _TBProductEditScreenState extends State<TBProductEditScreen> {
+class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   late String? _companySelection;
   late String? _categorySelection;
   final TextEditingController _nameTextEditingController =
@@ -63,6 +67,8 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AsyncValue<TBProductModel> selectedProduct =
+        ref.watch(productProvider(widget.selectedProduct.id));
     return Scaffold(
       appBar: TBAppBar(
         title: Text("Edit product"),
@@ -171,38 +177,54 @@ class _TBProductEditScreenState extends State<TBProductEditScreen> {
                           height: TBDimensions
                               .productEditDetailsScreen.contentSpacing),
                       TBButton(
+                        isLoading: switch (selectedProduct) {
+                          AsyncLoading() => true,
+                          _ => false,
+                        },
                         text: "Save changes",
                         type: TBButtonType.filled,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            widget.onEdit.call(
-                              TBProductModel(
-                                name: _nameTextEditingController.text.trim(),
-                                company: _companySelection!,
-                                category: _categorySelection!,
-                                description: _descriptionTextEditingController
-                                    .text
-                                    .trim(),
-                                discount: double.parse(
-                                    _discountTextEditingController.text.trim()),
-                                price: double.parse(
-                                    _priceTextEditingController.text.trim()),
-                                image: widget.selectedProduct.image,
-                                onStock: widget.selectedProduct.onStock,
-                                rating: widget.selectedProduct.rating,
-                              ),
-                            );
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => TBAlertDialog.success(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
-                                  },
-                                  message:
-                                      "The product has been successfully edited!"),
-                            );
+                            ref
+                                .read(productProvider(widget.selectedProduct.id)
+                                    .notifier)
+                                .edit(
+                                  TBProductModel(
+                                    id: widget.selectedProduct.id,
+                                    name:
+                                        _nameTextEditingController.text.trim(),
+                                    company: _companySelection!,
+                                    category: _categorySelection!,
+                                    description:
+                                        _descriptionTextEditingController.text
+                                            .trim(),
+                                    discount: double.parse(
+                                        _discountTextEditingController.text
+                                            .trim()),
+                                    price: double.parse(
+                                        _priceTextEditingController.text
+                                            .trim()),
+                                    image: widget.selectedProduct.image,
+                                    onStock: widget.selectedProduct.onStock,
+                                    rating: widget.selectedProduct.rating,
+                                  ),
+                                )
+                                .then((value) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => TBAlertDialog.success(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+                                      ref
+                                          .read(productListProvider.notifier)
+                                          .fetchProducts();
+                                    },
+                                    message:
+                                        "The product has been successfully edited!"),
+                              );
+                            });
                           } else {
                             showDialog(
                               context: context,
