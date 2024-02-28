@@ -33,8 +33,7 @@ class TBProductDetailScreen extends ConsumerWidget {
                 case AsyncData():
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => TBProductEditScreen(
-                          selectedProduct: selectedProduct.value,
-                          onEdit: onEdit)));
+                          id: selectedProduct.value.id, onEdit: onEdit)));
                 default:
                   break;
               }
