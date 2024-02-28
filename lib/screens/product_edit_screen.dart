@@ -15,9 +15,9 @@ import 'package:tech_byte/widgets/text_input_widget.dart';
 
 class TBProductEditScreen extends ConsumerStatefulWidget {
   final void Function(TBProductModel) onEdit;
-  final TBProductModel selectedProduct;
+  final int id;
   const TBProductEditScreen(
-      {super.key, required this.selectedProduct, required this.onEdit});
+      {super.key, required this.id, required this.onEdit});
 
   @override
   ConsumerState<TBProductEditScreen> createState() =>
@@ -39,20 +39,6 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    _nameTextEditingController.text = widget.selectedProduct.name;
-    _companySelection = widget.selectedProduct.company;
-    _categorySelection = widget.selectedProduct.category;
-    _descriptionTextEditingController.text = widget.selectedProduct.description;
-    _discountTextEditingController.text =
-        widget.selectedProduct.discount.toStringAsFixed(2);
-    _priceTextEditingController.text =
-        widget.selectedProduct.price.toStringAsFixed(2);
-
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _nameTextEditingController.dispose();
     _descriptionTextEditingController.dispose();
@@ -68,183 +54,202 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   @override
   Widget build(BuildContext context) {
     AsyncValue<TBProductModel> selectedProduct =
-        ref.watch(productProvider(widget.selectedProduct.id));
+        ref.watch(productProvider(widget.id));
+
+    if (selectedProduct.hasValue) {
+      _nameTextEditingController.text = selectedProduct.value!.name;
+      _companySelection = selectedProduct.value!.company;
+      _categorySelection = selectedProduct.value!.category;
+      _descriptionTextEditingController.text =
+          selectedProduct.value!.description;
+      _discountTextEditingController.text =
+          selectedProduct.value!.discount.toStringAsFixed(2);
+      _priceTextEditingController.text =
+          selectedProduct.value!.price.toStringAsFixed(2);
+    }
+
     return Scaffold(
       appBar: TBAppBar(
         title: Text("Edit product"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TBGallery.url(
-                images: [widget.selectedProduct.image],
-              ),
-              SizedBox(
-                  height: TBDimensions.productEditDetailsScreen.contentSpacing),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal:
-                        TBDimensions.productDetailsScreen.contentPadding),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TBTextInput(
-                        textEditingController: _nameTextEditingController,
-                        label: "Product name",
-                        validator: textInputValidator,
-                      ),
-                      SizedBox(
-                          height: TBDimensions
-                              .productEditDetailsScreen.contentSpacing),
-                      TBSelectInput(
-                        label: "Company",
-                        selectedItem: _companySelection,
-                        onTap: (String? value) {
-                          setState(() {
-                            _companySelection = value;
-                          });
-                        },
-                        suffixIcon: Icon(Icons.business_rounded),
-                        validator: selectInputValidator,
-                        items: [
-                          TBPickerListItemModel(name: "Apple"),
-                          TBPickerListItemModel(name: "Samsung"),
-                          TBPickerListItemModel(name: "Xiaomi"),
-                          TBPickerListItemModel(name: "Realme"),
-                          TBPickerListItemModel(name: "Oneplus")
-                        ],
-                      ),
-                      SizedBox(
-                          height: TBDimensions
-                              .productEditDetailsScreen.contentSpacing),
-                      TBSelectInput(
-                        label: "Category",
-                        selectedItem: _categorySelection,
-                        onTap: (String? value) {
-                          setState(() {
-                            _categorySelection = value;
-                          });
-                        },
-                        suffixIcon: Icon(Icons.category_outlined),
-                        validator: selectInputValidator,
-                        items: [
-                          TBPickerListItemModel(name: "Smartphones"),
-                          TBPickerListItemModel(name: "Laptops"),
-                          TBPickerListItemModel(name: "Video Games"),
-                          TBPickerListItemModel(name: "Audio"),
-                          TBPickerListItemModel(name: "Appliances")
-                        ],
-                      ),
-                      SizedBox(
-                          height: TBDimensions
-                              .productEditDetailsScreen.contentSpacing),
-                      TBTextInput(
-                        maxLines: 6,
-                        minLines: 6,
-                        textEditingController:
-                            _descriptionTextEditingController,
-                        label: "Description",
-                        validator: textInputValidator,
-                      ),
-                      SizedBox(
-                          height: TBDimensions
-                              .productEditDetailsScreen.contentSpacing),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TBTextInput(
-                              textEditingController:
-                                  _discountTextEditingController,
-                              label: "Discount",
-                              suffixText: "%",
-                              validator: textInputValidator,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: TBTextInput(
-                                textEditingController:
-                                    _priceTextEditingController,
-                                label: "Price",
-                                suffixText: "\$",
-                                validator: textInputValidator),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                          height: TBDimensions
-                              .productEditDetailsScreen.contentSpacing),
-                      TBButton(
-                        isLoading: switch (selectedProduct) {
-                          AsyncLoading() => true,
-                          _ => false,
-                        },
-                        text: "Save changes",
-                        type: TBButtonType.filled,
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            ref
-                                .read(productProvider(widget.selectedProduct.id)
-                                    .notifier)
-                                .edit(
-                                  TBProductModel(
-                                    id: widget.selectedProduct.id,
-                                    name:
-                                        _nameTextEditingController.text.trim(),
-                                    company: _companySelection!,
-                                    category: _categorySelection!,
-                                    description:
-                                        _descriptionTextEditingController.text
-                                            .trim(),
-                                    discount: double.parse(
-                                        _discountTextEditingController.text
-                                            .trim()),
-                                    price: double.parse(
-                                        _priceTextEditingController.text
-                                            .trim()),
-                                    image: widget.selectedProduct.image,
-                                    onStock: widget.selectedProduct.onStock,
-                                    rating: widget.selectedProduct.rating,
-                                  ),
-                                )
-                                .then((value) {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) => TBAlertDialog.success(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .popUntil((route) => route.isFirst);
-                                      ref
-                                          .read(productListProvider.notifier)
-                                          .fetchProducts();
-                                    },
-                                    message:
-                                        "The product has been successfully edited!"),
-                              );
-                            });
-                          } else {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => TBAlertDialog.error(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  message:
-                                      "Something went wrong while editing product!"),
-                            );
-                          }
-                        },
-                      ),
-                    ],
+          child: switch (selectedProduct) {
+            AsyncData(:final value) => Column(
+                children: [
+                  TBGallery.url(
+                    images: [value.image],
                   ),
-                ),
+                  SizedBox(
+                      height:
+                          TBDimensions.productEditDetailsScreen.contentSpacing),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal:
+                            TBDimensions.productDetailsScreen.contentPadding),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TBTextInput(
+                            textEditingController: _nameTextEditingController,
+                            label: "Product name",
+                            validator: textInputValidator,
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBSelectInput(
+                            label: "Company",
+                            selectedItem: _companySelection,
+                            onTap: (String? value) {
+                              setState(() {
+                                _companySelection = value;
+                              });
+                            },
+                            suffixIcon: Icon(Icons.business_rounded),
+                            validator: selectInputValidator,
+                            items: [
+                              TBPickerListItemModel(name: "Apple"),
+                              TBPickerListItemModel(name: "Samsung"),
+                              TBPickerListItemModel(name: "Xiaomi"),
+                              TBPickerListItemModel(name: "Realme"),
+                              TBPickerListItemModel(name: "Oneplus")
+                            ],
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBSelectInput(
+                            label: "Category",
+                            selectedItem: _categorySelection,
+                            onTap: (String? value) {
+                              setState(() {
+                                _categorySelection = value;
+                              });
+                            },
+                            suffixIcon: Icon(Icons.category_outlined),
+                            validator: selectInputValidator,
+                            items: [
+                              TBPickerListItemModel(name: "Smartphones"),
+                              TBPickerListItemModel(name: "Laptops"),
+                              TBPickerListItemModel(name: "Video Games"),
+                              TBPickerListItemModel(name: "Audio"),
+                              TBPickerListItemModel(name: "Appliances")
+                            ],
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBTextInput(
+                            maxLines: 6,
+                            minLines: 6,
+                            textEditingController:
+                                _descriptionTextEditingController,
+                            label: "Description",
+                            validator: textInputValidator,
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TBTextInput(
+                                  textEditingController:
+                                      _discountTextEditingController,
+                                  label: "Discount",
+                                  suffixText: "%",
+                                  validator: textInputValidator,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: TBTextInput(
+                                    textEditingController:
+                                        _priceTextEditingController,
+                                    label: "Price",
+                                    suffixText: "\$",
+                                    validator: textInputValidator),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBButton(
+                            isLoading: switch (selectedProduct) {
+                              AsyncLoading() => true,
+                              _ => false,
+                            },
+                            text: "Save changes",
+                            type: TBButtonType.filled,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                ref
+                                    .read(productProvider(value.id).notifier)
+                                    .edit(
+                                      TBProductModel(
+                                        id: value.id,
+                                        name: _nameTextEditingController.text
+                                            .trim(),
+                                        company: _companySelection!,
+                                        category: _categorySelection!,
+                                        description:
+                                            _descriptionTextEditingController
+                                                .text
+                                                .trim(),
+                                        discount: double.parse(
+                                            _discountTextEditingController.text
+                                                .trim()),
+                                        price: double.parse(
+                                            _priceTextEditingController.text
+                                                .trim()),
+                                        image: value.image,
+                                        onStock: value.onStock,
+                                        rating: value.rating,
+                                      ),
+                                    )
+                                    .then((value) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) => TBAlertDialog.success(
+                                        onPressed: () {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                          ref
+                                              .read(
+                                                  productListProvider.notifier)
+                                              .fetchProducts();
+                                        },
+                                        message:
+                                            "The product has been successfully edited!"),
+                                  );
+                                });
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) => TBAlertDialog.error(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      message:
+                                          "Something went wrong while editing product!"),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            AsyncError() => Text("Oops, something went wrong!"),
+            _ => Center(child: CircularProgressIndicator()),
+          },
         ),
       ),
     );
