@@ -86,7 +86,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
               child: Column(
                 children: [
                   TBGallery.url(
-                    images: [value.thumbnail],
+                    images: value.images,
                   ),
                   SizedBox(
                       height:
@@ -115,7 +115,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                 _companySelection = value;
                               });
                             },
-                            suffixIcon: Icon(Icons.business_rounded),
+                            suffixIcon: const Icon(Icons.business_rounded),
                             validator: selectInputValidator,
                             items: [
                               TBPickerListItemModel(name: "Apple"),
@@ -136,7 +136,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                 _categorySelection = value;
                               });
                             },
-                            suffixIcon: Icon(Icons.category_outlined),
+                            suffixIcon: const Icon(Icons.category_outlined),
                             validator: selectInputValidator,
                             items: [
                               TBPickerListItemModel(name: "Smartphones"),
@@ -257,7 +257,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                 ],
               ),
             ),
-          AsyncError() => Text("Oops, something went wrong!"),
+          AsyncError() => Text(selectedProduct.error.toString()),
           AsyncLoading(:final value) => SingleChildScrollView(
               child: Column(
                 children: [
@@ -276,6 +276,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                       child: Column(
                         children: [
                           TBTextInput(
+                            enabled: false,
                             textEditingController: _titleTextEditingController,
                             label: "Product name",
                             validator: textInputValidator,
@@ -284,6 +285,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                               height: TBDimensions
                                   .productEditDetailsScreen.contentSpacing),
                           TBSelectInput(
+                            enabled: false,
                             label: "Company",
                             selectedItem: _companySelection,
                             onTap: (String? value) {
@@ -291,7 +293,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                 _companySelection = value;
                               });
                             },
-                            suffixIcon: Icon(Icons.business_rounded),
+                            suffixIcon: const Icon(Icons.business_rounded),
                             validator: selectInputValidator,
                             items: [
                               TBPickerListItemModel(name: "Apple"),
@@ -305,6 +307,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                               height: TBDimensions
                                   .productEditDetailsScreen.contentSpacing),
                           TBSelectInput(
+                            enabled: false,
                             label: "Category",
                             selectedItem: _categorySelection,
                             onTap: (String? value) {
@@ -312,7 +315,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                 _categorySelection = value;
                               });
                             },
-                            suffixIcon: Icon(Icons.category_outlined),
+                            suffixIcon: const Icon(Icons.category_outlined),
                             validator: selectInputValidator,
                             items: [
                               TBPickerListItemModel(name: "Smartphones"),
@@ -326,6 +329,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                               height: TBDimensions
                                   .productEditDetailsScreen.contentSpacing),
                           TBTextInput(
+                            enabled: false,
                             maxLines: 6,
                             minLines: 6,
                             textEditingController:
@@ -340,6 +344,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             children: [
                               Expanded(
                                 child: TBTextInput(
+                                  enabled: false,
                                   textEditingController:
                                       _discountTextEditingController,
                                   label: "Discount",
@@ -350,6 +355,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: TBTextInput(
+                                    enabled: false,
                                     textEditingController:
                                         _priceTextEditingController,
                                     label: "Price",

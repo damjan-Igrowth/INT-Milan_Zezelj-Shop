@@ -21,8 +21,8 @@ class Product extends _$Product {
     state = const AsyncValue.loading();
 
     state = await AsyncValue.guard(() async {
-      await Future.delayed(const Duration(seconds: 3));
-      return product;
+      await api.editProduct(product.id, product);
+      return fetchProduct(id);
     });
   }
 }

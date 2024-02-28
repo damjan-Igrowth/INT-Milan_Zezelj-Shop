@@ -37,4 +37,15 @@ class TBProductModel {
         thumbnail = json["thumbnail"] {
     images = [for (final image in json["images"]) image.toString()];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "title": title,
+      "description": description,
+      "price": price.toStringAsFixed(2),
+      "discountPercentage": discountPercentage.toStringAsFixed(2),
+      "brand": brand,
+      "category": category,
+    };
+  }
 }
