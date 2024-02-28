@@ -105,7 +105,6 @@ class _ListTile extends StatefulWidget {
   final bool _withIcon;
 
   const _ListTile({
-    super.key,
     this.onTap,
     required this.isSelected,
     required this.name,
@@ -113,7 +112,6 @@ class _ListTile extends StatefulWidget {
         iconData = null;
 
   const _ListTile.withIcon({
-    super.key,
     this.onTap,
     required this.isSelected,
     required this.iconData,

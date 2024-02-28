@@ -7,7 +7,7 @@ String _host = "dummyjson.com";
 Uri _getUrl(String path, {Map<String, dynamic>? queryParameters}) {
   return Uri(
     scheme: "https",
-    host: "dummyjson.com",
+    host: _host,
     path: path,
     queryParameters: queryParameters,
   );

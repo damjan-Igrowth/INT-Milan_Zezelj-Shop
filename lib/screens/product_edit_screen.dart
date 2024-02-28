@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
@@ -78,7 +77,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
 
     return Scaffold(
       appBar: TBAppBar(
-        title: Text("Edit product"),
+        title: const Text("Edit product"),
       ),
       body: SafeArea(
         child: switch (selectedProduct) {

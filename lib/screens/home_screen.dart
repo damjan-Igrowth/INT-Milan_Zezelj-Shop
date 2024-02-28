@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
 import 'package:tech_byte/screens/product_detail_screen.dart';

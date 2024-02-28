@@ -25,7 +25,7 @@ class TBProductDetailScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar(
-        title: Text("Product details"),
+        title: const Text("Product details"),
         actions: [
           IconButton(
             onPressed: () {
