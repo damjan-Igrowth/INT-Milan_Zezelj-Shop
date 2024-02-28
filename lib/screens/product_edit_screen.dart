@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
@@ -248,7 +249,176 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                 ],
               ),
             AsyncError() => Text("Oops, something went wrong!"),
-            _ => Center(child: CircularProgressIndicator()),
+            AsyncLoading(:final value) => Column(
+                children: [
+                  TBGallery.url(
+                    images: [value!.image],
+                  ),
+                  SizedBox(
+                      height:
+                          TBDimensions.productEditDetailsScreen.contentSpacing),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal:
+                            TBDimensions.productDetailsScreen.contentPadding),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TBTextInput(
+                            textEditingController: _nameTextEditingController,
+                            label: "Product name",
+                            validator: textInputValidator,
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBSelectInput(
+                            label: "Company",
+                            selectedItem: _companySelection,
+                            onTap: (String? value) {
+                              setState(() {
+                                _companySelection = value;
+                              });
+                            },
+                            suffixIcon: Icon(Icons.business_rounded),
+                            validator: selectInputValidator,
+                            items: [
+                              TBPickerListItemModel(name: "Apple"),
+                              TBPickerListItemModel(name: "Samsung"),
+                              TBPickerListItemModel(name: "Xiaomi"),
+                              TBPickerListItemModel(name: "Realme"),
+                              TBPickerListItemModel(name: "Oneplus")
+                            ],
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBSelectInput(
+                            label: "Category",
+                            selectedItem: _categorySelection,
+                            onTap: (String? value) {
+                              setState(() {
+                                _categorySelection = value;
+                              });
+                            },
+                            suffixIcon: Icon(Icons.category_outlined),
+                            validator: selectInputValidator,
+                            items: [
+                              TBPickerListItemModel(name: "Smartphones"),
+                              TBPickerListItemModel(name: "Laptops"),
+                              TBPickerListItemModel(name: "Video Games"),
+                              TBPickerListItemModel(name: "Audio"),
+                              TBPickerListItemModel(name: "Appliances")
+                            ],
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBTextInput(
+                            maxLines: 6,
+                            minLines: 6,
+                            textEditingController:
+                                _descriptionTextEditingController,
+                            label: "Description",
+                            validator: textInputValidator,
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TBTextInput(
+                                  textEditingController:
+                                      _discountTextEditingController,
+                                  label: "Discount",
+                                  suffixText: "%",
+                                  validator: textInputValidator,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: TBTextInput(
+                                    textEditingController:
+                                        _priceTextEditingController,
+                                    label: "Price",
+                                    suffixText: "\$",
+                                    validator: textInputValidator),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                              height: TBDimensions
+                                  .productEditDetailsScreen.contentSpacing),
+                          TBButton(
+                            isLoading: true,
+                            text: "Save changes",
+                            type: TBButtonType.filled,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                ref
+                                    .read(productProvider(value.id).notifier)
+                                    .edit(
+                                      TBProductModel(
+                                        id: value.id,
+                                        name: _nameTextEditingController.text
+                                            .trim(),
+                                        company: _companySelection!,
+                                        category: _categorySelection!,
+                                        description:
+                                            _descriptionTextEditingController
+                                                .text
+                                                .trim(),
+                                        discount: double.parse(
+                                            _discountTextEditingController.text
+                                                .trim()),
+                                        price: double.parse(
+                                            _priceTextEditingController.text
+                                                .trim()),
+                                        image: value.image,
+                                        onStock: value.onStock,
+                                        rating: value.rating,
+                                      ),
+                                    )
+                                    .then((value) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) => TBAlertDialog.success(
+                                        onPressed: () {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                          ref
+                                              .read(
+                                                  productListProvider.notifier)
+                                              .fetchProducts();
+                                        },
+                                        message:
+                                            "The product has been successfully edited!"),
+                                  );
+                                });
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) => TBAlertDialog.error(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      message:
+                                          "Something went wrong while editing product!"),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            _ => CircularProgressIndicator()
           },
         ),
       ),
