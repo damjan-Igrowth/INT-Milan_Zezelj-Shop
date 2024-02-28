@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
 import 'package:tech_byte/screens/product_detail_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
@@ -9,17 +8,12 @@ import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/product_card_widget.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    AsyncValue<List<TBProductModel>> products = ref.watch(productListProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productsState = ref.watch(productListProvider);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
@@ -46,46 +40,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         padding: EdgeInsets.symmetric(
             horizontal: TBDimensions.homeScreen.contentPadding),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              switch (products) {
-                AsyncData(:final value) => Expanded(
-                    child: ListView.separated(
-                      padding: EdgeInsets.only(
-                          top: TBDimensions.homeScreen.contentPadding,
-                          bottom: TBDimensions.homeScreen.listBottomPadding),
-                      separatorBuilder: (context, index) => SizedBox(
-                          height: TBDimensions.homeScreen.separatorHeight),
-                      itemCount: value.length,
-                      itemBuilder: (context, index) => TBProductCard(
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => TBProductDetailScreen(
-                                      onEdit: (TBProductModel editedProduct) {
-                                        setState(() {
-                                          value[index] = editedProduct;
-                                        });
-                                      },
-                                      id: value[index].id))),
-                          name: value[index].name,
-                          category: value[index].category,
-                          price: value[index].price,
-                          discount: value[index].discount,
-                          image: value[index].image,
-                          rating: value[index].rating,
-                          onStock: value[index].onStock),
-                    ),
-                  ),
-                AsyncError() => Text("Oops, something went wrong!"),
-                _ => SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircularProgressIndicator(
-                      color: TBColor.app.lightBlue,
-                    )),
-              },
-            ],
+          child: productsState.when(
+            data: (products) => ListView.separated(
+              padding: EdgeInsets.only(
+                  top: TBDimensions.homeScreen.contentPadding,
+                  bottom: TBDimensions.homeScreen.listBottomPadding),
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: TBDimensions.homeScreen.separatorHeight),
+              itemCount: products.length,
+              itemBuilder: (context, index) => TBProductCard(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          TBProductDetailScreen(id: products[index].id))),
+                  name: products[index].name,
+                  category: products[index].category,
+                  price: products[index].price,
+                  discount: products[index].discount,
+                  image: products[index].image,
+                  rating: products[index].rating,
+                  onStock: products[index].onStock),
+            ),
+            error: (error, stackTrace) =>
+                const Text("Oops, something went wrong!"),
+            loading: () => SizedBox(
+              width: 100,
+              height: 100,
+              child: CircularProgressIndicator(color: TBColor.app.lightBlue),
+            ),
           ),
         ),
       ),
