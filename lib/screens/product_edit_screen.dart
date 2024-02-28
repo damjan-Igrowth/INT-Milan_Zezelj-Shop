@@ -4,6 +4,7 @@ import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
 import 'package:tech_byte/providers/product_provider.dart';
+import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
 import 'package:tech_byte/utils/validators.dart';
 import 'package:tech_byte/widgets/alert_dialog_widget.dart';
@@ -249,7 +250,19 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                 ],
               ),
             AsyncError() => Text("Oops, something went wrong!"),
-            _ => Center(child: CircularProgressIndicator()),
+            _ => Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: CircularProgressIndicator(
+                        color: TBColor.app.lightBlue,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           },
         ),
       ),

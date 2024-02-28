@@ -50,7 +50,7 @@ class TBProductDetailScreen extends ConsumerWidget {
           AsyncData(:final value) => Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TBGallery.url(images: [value.thumbnail]),
+                TBGallery.url(images: value.images),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal:
@@ -81,8 +81,20 @@ class TBProductDetailScreen extends ConsumerWidget {
                 ),
               ],
             ),
-          AsyncError() => Text("Oops, something went wrong!"),
-          _ => Center(child: CircularProgressIndicator()),
+          AsyncError() => Text(selectedProduct.error.toString()),
+          _ => Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CircularProgressIndicator(
+                      color: TBColor.app.lightBlue,
+                    ),
+                  ),
+                ],
+              ),
+            ),
         },
       ),
     );

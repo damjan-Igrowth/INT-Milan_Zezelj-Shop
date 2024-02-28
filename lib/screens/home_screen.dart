@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_list_provider.dart';
 import 'package:tech_byte/screens/product_detail_screen.dart';
@@ -77,13 +78,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           onStock: value[index].stock),
                     ),
                   ),
-                AsyncError() => Text("Oops, something went wrong!"),
+                AsyncError() => Text(products.error.toString()),
                 _ => SizedBox(
                     width: 100,
                     height: 100,
                     child: CircularProgressIndicator(
                       color: TBColor.app.lightBlue,
-                    )),
+                    ),
+                  ),
               },
             ],
           ),

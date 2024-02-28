@@ -9,7 +9,7 @@ class TBProductModel {
   String brand;
   String category;
   String thumbnail;
-  List<String> images;
+  late List<String> images;
 
   TBProductModel(
       {required this.id,
@@ -28,12 +28,13 @@ class TBProductModel {
       : id = json["id"],
         title = json["title"],
         description = json["description"],
-        price = json["price"],
-        discountPercentage = json["discountPercentage"],
-        rating = json["rating"],
-        stock = json["stock"],
+        price = json["price"].toDouble(),
+        discountPercentage = json["discountPercentage"].toDouble(),
+        rating = json["rating"].toDouble(),
+        stock = json["stock"].toInt(),
         brand = json["brand"],
         category = json["category"],
-        thumbnail = json["thumbnail"],
-        images = json["images"];
+        thumbnail = json["thumbnail"] {
+    images = [for (final image in json["images"]) image.toString()];
+  }
 }

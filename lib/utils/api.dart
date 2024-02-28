@@ -16,13 +16,16 @@ Uri _getUrl(String path, {Map<String, dynamic>? queryParameters}) {
 }
 
 Future<List<TBProductModel>> getProducts() async {
-  print("ASD");
   final response = await http.get(_getUrl("/products"));
 
-  print(response.statusCode);
-  print(response.body);
   return [
-    for (final product in jsonDecode(response.body))
+    for (final product in jsonDecode(response.body)["products"])
       TBProductModel.fromJson(product)
   ];
+}
+
+Future<TBProductModel> getProduct(int id) async {
+  final response = await http.get(_getUrl("/products/$id"));
+
+  return TBProductModel.fromJson(jsonDecode(response.body));
 }
