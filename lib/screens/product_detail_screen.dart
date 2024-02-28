@@ -45,9 +45,9 @@ class TBProductDetailScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: switch (selectedProduct) {
-          AsyncData(:final value) => Column(
+      body: switch (selectedProduct) {
+        AsyncData(:final value) => SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TBGallery.url(images: value.images),
@@ -81,22 +81,18 @@ class TBProductDetailScreen extends ConsumerWidget {
                 ),
               ],
             ),
-          AsyncError() => Text(selectedProduct.error.toString()),
-          _ => Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircularProgressIndicator(
-                      color: TBColor.app.lightBlue,
-                    ),
-                  ),
-                ],
+          ),
+        AsyncError() => const Text("Oops, something went wrong!"),
+        _ => Center(
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: CircularProgressIndicator(
+                color: TBColor.app.lightBlue,
               ),
             ),
-        },
-      ),
+          ),
+      },
     );
   }
 }
