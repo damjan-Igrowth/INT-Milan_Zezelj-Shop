@@ -7,11 +7,7 @@ part "product_provider.g.dart";
 class Product extends _$Product {
   Future<TBProductModel> fetchProduct(int id) async {
     await Future.delayed(Duration(seconds: 2));
-    List<TBProductModel> products = [
-      product1,
-      product2,
-      product3,
-    ];
+    List<TBProductModel> products = [];
 
     return products.firstWhere((element) => element.id == id);
   }

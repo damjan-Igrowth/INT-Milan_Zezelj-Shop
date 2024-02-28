@@ -40,12 +40,12 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
 
   @override
   void initState() {
-    _nameTextEditingController.text = widget.selectedProduct.name;
-    _companySelection = widget.selectedProduct.company;
+    _nameTextEditingController.text = widget.selectedProduct.title;
+    _companySelection = widget.selectedProduct.brand;
     _categorySelection = widget.selectedProduct.category;
     _descriptionTextEditingController.text = widget.selectedProduct.description;
     _discountTextEditingController.text =
-        widget.selectedProduct.discount.toStringAsFixed(2);
+        widget.selectedProduct.discountPercentage.toStringAsFixed(2);
     _priceTextEditingController.text =
         widget.selectedProduct.price.toStringAsFixed(2);
 
@@ -78,7 +78,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
           child: Column(
             children: [
               TBGallery.url(
-                images: [widget.selectedProduct.image],
+                images: [widget.selectedProduct.thumbnail],
               ),
               SizedBox(
                   height: TBDimensions.productEditDetailsScreen.contentSpacing),
@@ -191,22 +191,23 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                 .edit(
                                   TBProductModel(
                                     id: widget.selectedProduct.id,
-                                    name:
+                                    title:
                                         _nameTextEditingController.text.trim(),
-                                    company: _companySelection!,
+                                    brand: _companySelection!,
                                     category: _categorySelection!,
                                     description:
                                         _descriptionTextEditingController.text
                                             .trim(),
-                                    discount: double.parse(
+                                    discountPercentage: double.parse(
                                         _discountTextEditingController.text
                                             .trim()),
                                     price: double.parse(
                                         _priceTextEditingController.text
                                             .trim()),
-                                    image: widget.selectedProduct.image,
-                                    onStock: widget.selectedProduct.onStock,
+                                    thumbnail: widget.selectedProduct.thumbnail,
+                                    stock: widget.selectedProduct.stock,
                                     rating: widget.selectedProduct.rating,
+                                    images: widget.selectedProduct.images,
                                   ),
                                 )
                                 .then((value) {

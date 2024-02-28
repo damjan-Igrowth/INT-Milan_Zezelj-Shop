@@ -51,7 +51,7 @@ class TBProductDetailScreen extends ConsumerWidget {
           AsyncData(:final value) => Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TBGallery.url(images: [value.image]),
+                TBGallery.url(images: [value.thumbnail]),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal:
@@ -61,17 +61,17 @@ class TBProductDetailScreen extends ConsumerWidget {
                       TBSection(
                           title: "Overview",
                           content: TBDetailOverviewCard(
-                              name: value.name,
+                              name: value.title,
                               description: value.description,
-                              company: value.company,
+                              company: value.brand,
                               price: value.price,
-                              discount: value.discount,
+                              discount: value.discountPercentage,
                               rating: value.rating)),
                       TBSection(
                           title: "Availability",
                           content: TBAvailabilityCard(
                             category: value.category,
-                            onStock: value.onStock,
+                            onStock: value.stock,
                           )),
                       SizedBox(
                         height: TBDimensions
