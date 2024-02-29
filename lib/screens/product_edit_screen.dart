@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
+import 'package:tech_byte/providers/edit_product_provider.dart';
 import 'package:tech_byte/providers/product_category_provider.dart';
-import 'package:tech_byte/providers/product_list_provider.dart';
 import 'package:tech_byte/providers/product_provider.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
@@ -73,6 +73,37 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   Widget build(BuildContext context) {
     final productState = ref.watch(productProvider(widget.id));
     final categoriesState = ref.watch(productCategoryProvider);
+    final editProductState = ref.watch(editProductProvider(widget.id));
+    ref.listen(
+      editProductProvider(widget.id),
+      (previous, next) {
+        if (next == EditProductStateType.error) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => TBAlertDialog.error(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                message: "Something went wrong while editing product!"),
+          );
+        } else if (next == EditProductStateType.success) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => TBAlertDialog.success(
+                onPressed: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+                message: "The product has been successfully edited!"),
+          );
+        }
+      },
+    );
+
+    final enabled =
+        editProductState == EditProductStateType.loading ? false : true;
+    final isLoading = !enabled;
 
     return Scaffold(
       appBar: TBAppBar(
@@ -98,6 +129,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                     child: Column(
                       children: [
                         TBTextInput(
+                          enabled: enabled,
                           textEditingController: _titleTextEditingController,
                           label: "Product name",
                           validator: textInputValidator,
@@ -106,6 +138,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             height: TBDimensions
                                 .productEditDetailsScreen.contentSpacing),
                         TBSelectInput(
+                          enabled: enabled,
                           label: "Company",
                           selectedItem: _companySelection,
                           onTap: (String? value) {
@@ -128,6 +161,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                 .productEditDetailsScreen.contentSpacing),
                         categoriesState.when(
                           data: (categories) => TBSelectInput(
+                            enabled: enabled,
                             label: "Category",
                             selectedItem: _categorySelection,
                             onTap: (String? value) {
@@ -140,6 +174,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             items: categories,
                           ),
                           loading: () => TBSelectInput(
+                            enabled: enabled,
                             isLoading: true,
                             label: "Category",
                             selectedItem: _categorySelection,
@@ -159,6 +194,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             height: TBDimensions
                                 .productEditDetailsScreen.contentSpacing),
                         TBTextInput(
+                          enabled: enabled,
                           maxLines: 6,
                           minLines: 6,
                           textEditingController:
@@ -173,6 +209,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                           children: [
                             Expanded(
                               child: TBTextInput(
+                                enabled: enabled,
                                 textEditingController:
                                     _discountTextEditingController,
                                 label: "Discount",
@@ -183,6 +220,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: TBTextInput(
+                                  enabled: enabled,
                                   textEditingController:
                                       _priceTextEditingController,
                                   label: "Price",
@@ -195,16 +233,14 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             height: TBDimensions
                                 .productEditDetailsScreen.contentSpacing),
                         TBButton(
-                          isLoading: switch (productState) {
-                            AsyncLoading() => true,
-                            _ => false,
-                          },
+                          isLoading: isLoading,
                           text: "Save changes",
                           type: TBButtonType.filled,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               ref
-                                  .read(productProvider(product.id).notifier)
+                                  .read(
+                                      editProductProvider(product.id).notifier)
                                   .edit(
                                     TBProductModel(
                                       id: product.id,
@@ -226,23 +262,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                       rating: product.rating,
                                       images: product.images,
                                     ),
-                                  )
-                                  .then((value) {
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) => TBAlertDialog.success(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .popUntil((route) => route.isFirst);
-                                        ref
-                                            .read(productListProvider.notifier)
-                                            .fetchProducts();
-                                      },
-                                      message:
-                                          "The product has been successfully edited!"),
-                                );
-                              });
+                                  );
                             } else {
                               showDialog(
                                 context: context,

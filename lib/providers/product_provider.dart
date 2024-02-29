@@ -16,13 +16,4 @@ class Product extends _$Product {
   FutureOr<TBProductModel> build(int id) async {
     return fetchProduct(id);
   }
-
-  Future<void> edit(TBProductModel product) async {
-    state = const AsyncValue.loading();
-
-    state = await AsyncValue.guard(() async {
-      await api.editProduct(product.id, product);
-      return fetchProduct(id);
-    });
-  }
 }
