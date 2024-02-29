@@ -220,7 +220,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                           text: "Save changes",
                           type: TBButtonType.filled,
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState?.validate() ?? false) {
                               ref
                                   .read(
                                       editProductProvider(product.id).notifier)
