@@ -8,7 +8,7 @@ part "product_provider.g.dart";
 class Product extends _$Product {
   Future<TBProductModel> fetchProduct(int id) async {
     TBProductModel product = await api.getProduct(id);
-
+    state = AsyncValue.data(product);
     return product;
   }
 
