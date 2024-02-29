@@ -31,7 +31,15 @@ Future<TBProductModel> getProduct(int id) async {
 Future<void> editProduct(int id, TBProductModel product) async {
   await http.put(
     _getUrl("/products/$id"),
-    // headers: {'Content-Type': 'application/json'},
-    body: product.toJson(),
+    headers: {'Content-Type': "application/json"},
+    body: jsonEncode(product.toJson()),
   );
+}
+
+Future<List<String>> getProductCategories() async {
+  final response = await http.get(_getUrl("/products/categories"));
+  final categoriesRaw = [
+    for (final item in jsonDecode(response.body)) item.toString()
+  ];
+  return categoriesRaw;
 }

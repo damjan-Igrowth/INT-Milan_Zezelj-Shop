@@ -12,6 +12,7 @@ class TBSelectInput extends StatefulWidget {
   final Widget? suffixIcon;
   final String? suffixText;
   final String? Function(String?)? validator;
+  final bool? isLoading;
 
   const TBSelectInput(
       {super.key,
@@ -22,7 +23,8 @@ class TBSelectInput extends StatefulWidget {
       this.enabled = true,
       this.suffixIcon,
       this.suffixText,
-      this.validator});
+      this.validator,
+      this.isLoading});
 
   @override
   State<TBSelectInput> createState() => _TBSelectInputState();
@@ -57,6 +59,7 @@ class _TBSelectInputState extends State<TBSelectInput> {
           showModalBottomSheet(
               context: context,
               builder: (context) => TBPickerList(
+                  isLoading: true,
                   title: widget.label,
                   selectedItem: _selectedItem,
                   items: widget.items,

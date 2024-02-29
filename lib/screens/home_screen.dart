@@ -19,7 +19,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<TBProductModel>> products = ref.watch(productListProvider);
+    final productsState = ref.watch(productListProvider);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
@@ -49,43 +49,39 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              switch (products) {
-                AsyncData(:final value) => Expanded(
-                    child: ListView.separated(
-                      padding: EdgeInsets.only(
-                          top: TBDimensions.homeScreen.contentPadding,
-                          bottom: TBDimensions.homeScreen.listBottomPadding),
-                      separatorBuilder: (context, index) => SizedBox(
-                          height: TBDimensions.homeScreen.separatorHeight),
-                      itemCount: value.length,
-                      itemBuilder: (context, index) => TBProductCard(
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => TBProductDetailScreen(
-                                      onEdit: (TBProductModel editedProduct) {
-                                        setState(() {
-                                          value[index] = editedProduct;
-                                        });
-                                      },
-                                      id: value[index].id))),
-                          name: value[index].title,
-                          category: value[index].category,
-                          price: value[index].price,
-                          discount: value[index].discountPercentage,
-                          image: value[index].thumbnail,
-                          rating: value[index].rating,
-                          onStock: value[index].stock),
-                    ),
+              productsState.when(
+                data: (products) => Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.only(
+                        top: TBDimensions.homeScreen.contentPadding,
+                        bottom: TBDimensions.homeScreen.listBottomPadding),
+                    separatorBuilder: (context, index) => SizedBox(
+                        height: TBDimensions.homeScreen.separatorHeight),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) => TBProductCard(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => TBProductDetailScreen(
+                                    id: products[index].id))),
+                        name: products[index].title,
+                        category: products[index].category,
+                        price: products[index].price,
+                        discount: products[index].discountPercentage,
+                        image: products[index].thumbnail,
+                        rating: products[index].rating,
+                        onStock: products[index].stock),
                   ),
-                AsyncError() => Text(products.error.toString()),
-                _ => SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircularProgressIndicator(
-                      color: TBColor.app.lightBlue,
-                    ),
+                ),
+                error: (error, stackTrace) =>
+                    Text(productsState.error.toString()),
+                loading: () => SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: CircularProgressIndicator(
+                    color: TBColor.app.lightBlue,
                   ),
-              },
+                ),
+              ),
             ],
           ),
         ),
