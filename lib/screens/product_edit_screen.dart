@@ -40,19 +40,18 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
 
   @override
   void initState() {
-    _titleTextEditingController.text =
-        ref.read(productProvider(widget.id)).value!.title;
-    _companySelection = ref.read(productProvider(widget.id)).value!.brand;
-    _categorySelection = ref.read(productProvider(widget.id)).value!.category;
-    _descriptionTextEditingController.text =
-        ref.read(productProvider(widget.id)).value!.description;
-    _discountTextEditingController.text = ref
-        .read(productProvider(widget.id))
-        .value!
-        .discountPercentage
-        .toStringAsFixed(2);
-    _priceTextEditingController.text =
-        ref.read(productProvider(widget.id)).value!.price.toStringAsFixed(2);
+    final productState = ref.read(productProvider(widget.id));
+
+    productState.whenOrNull(data: (product) {
+      _titleTextEditingController.text = product.title;
+      _companySelection = product.brand;
+      _categorySelection = product.category;
+      _descriptionTextEditingController.text = product.description;
+      _discountTextEditingController.text =
+          product.discountPercentage.toStringAsFixed(2);
+      _priceTextEditingController.text = product.price.toStringAsFixed(2);
+    });
+
     super.initState();
   }
 
@@ -62,9 +61,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
     _descriptionTextEditingController.dispose();
     _discountTextEditingController.dispose();
     _priceTextEditingController.dispose();
-    if (_formKey.currentState != null) {
-      _formKey.currentState!.dispose();
-    }
+    _formKey.currentState?.dispose();
 
     super.dispose();
   }
@@ -159,36 +156,22 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                         SizedBox(
                             height: TBDimensions
                                 .productEditDetailsScreen.contentSpacing),
-                        categoriesState.when(
-                          data: (categories) => TBSelectInput(
-                            enabled: enabled,
-                            label: "Category",
-                            selectedItem: _categorySelection,
-                            onTap: (String? value) {
-                              setState(() {
-                                _categorySelection = value;
-                              });
-                            },
-                            suffixIcon: const Icon(Icons.category_outlined),
-                            validator: selectInputValidator,
-                            items: categories,
-                          ),
-                          loading: () => TBSelectInput(
-                            enabled: enabled,
-                            isLoading: true,
-                            label: "Category",
-                            selectedItem: _categorySelection,
-                            onTap: (String? value) {
-                              setState(() {
-                                _categorySelection = value;
-                              });
-                            },
-                            suffixIcon: const Icon(Icons.category_outlined),
-                            validator: selectInputValidator,
-                            items: [],
-                          ),
-                          error: (error, stackTrace) => Text(
-                              "Failed loading categories! ${error.toString()}"),
+                        TBSelectInput(
+                          enabled: !categoriesState.isLoading && enabled,
+                          isLoading: categoriesState.isLoading,
+                          label: "Category",
+                          selectedItem: _categorySelection,
+                          onTap: (String? value) {
+                            setState(() {
+                              _categorySelection = value;
+                            });
+                          },
+                          suffixIcon: const Icon(Icons.category_outlined),
+                          validator: selectInputValidator,
+                          items: categoriesState.when(
+                              data: (categories) => categories,
+                              error: (error, stackTrace) => null,
+                              loading: () => []),
                         ),
                         SizedBox(
                             height: TBDimensions
@@ -237,7 +220,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                           text: "Save changes",
                           type: TBButtonType.filled,
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState?.validate() ?? false) {
                               ref
                                   .read(
                                       editProductProvider(product.id).notifier)
@@ -263,17 +246,6 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                       images: product.images,
                                     ),
                                   );
-                            } else {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) => TBAlertDialog.error(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    message:
-                                        "Something went wrong while editing product!"),
-                              );
                             }
                           },
                         ),

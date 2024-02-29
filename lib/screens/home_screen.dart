@@ -8,16 +8,11 @@ import 'package:tech_byte/widgets/app_bar_widget.dart';
 import 'package:tech_byte/widgets/button_widget.dart';
 import 'package:tech_byte/widgets/product_card_widget.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final productsState = ref.watch(productListProvider);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -45,43 +40,34 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         padding: EdgeInsets.symmetric(
             horizontal: TBDimensions.homeScreen.contentPadding),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              productsState.when(
-                data: (products) => Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.only(
-                        top: TBDimensions.homeScreen.contentPadding,
-                        bottom: TBDimensions.homeScreen.listBottomPadding),
-                    separatorBuilder: (context, index) => SizedBox(
-                        height: TBDimensions.homeScreen.separatorHeight),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) => TBProductCard(
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => TBProductDetailScreen(
-                                    id: products[index].id))),
-                        name: products[index].title,
-                        category: products[index].category,
-                        price: products[index].price,
-                        discount: products[index].discountPercentage,
-                        image: products[index].thumbnail,
-                        rating: products[index].rating,
-                        onStock: products[index].stock),
-                  ),
-                ),
-                error: (error, stackTrace) =>
-                    Text(productsState.error.toString()),
-                loading: () => SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: CircularProgressIndicator(
-                    color: TBColor.app.lightBlue,
-                  ),
-                ),
+          child: productsState.when(
+            data: (products) => ListView.separated(
+              padding: EdgeInsets.only(
+                  top: TBDimensions.homeScreen.contentPadding,
+                  bottom: TBDimensions.homeScreen.listBottomPadding),
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: TBDimensions.homeScreen.separatorHeight),
+              itemCount: products.length,
+              itemBuilder: (context, index) => TBProductCard(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          TBProductDetailScreen(id: products[index].id))),
+                  name: products[index].title,
+                  category: products[index].category,
+                  price: products[index].price,
+                  discount: products[index].discountPercentage,
+                  image: products[index].thumbnail,
+                  rating: products[index].rating,
+                  onStock: products[index].stock),
+            ),
+            error: (error, stackTrace) => Text(productsState.error.toString()),
+            loading: () => SizedBox(
+              width: 100,
+              height: 100,
+              child: CircularProgressIndicator(
+                color: TBColor.app.lightBlue,
               ),
-            ],
+            ),
           ),
         ),
       ),

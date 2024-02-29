@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/product_provider.dart';
 import 'package:tech_byte/screens/product_edit_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
@@ -19,7 +18,7 @@ class TBProductDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<TBProductModel> productState = ref.watch(productProvider(id));
+    final productState = ref.watch(productProvider(id));
     return Scaffold(
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar(
@@ -30,8 +29,7 @@ class TBProductDetailScreen extends ConsumerWidget {
               productState.when(
                   data: (product) => Navigator.of(context).push(
                       MaterialPageRoute(
-                          builder: (context) =>
-                              TBProductEditScreen(id: product.id))),
+                          builder: (context) => TBProductEditScreen(id: id))),
                   error: (error, stackTrace) {},
                   loading: () {});
             },

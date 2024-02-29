@@ -1,7 +1,6 @@
 import "package:riverpod_annotation/riverpod_annotation.dart";
 import "package:tech_byte/models/product_model.dart";
 import "package:tech_byte/providers/product_list_provider.dart";
-import "package:tech_byte/providers/product_provider.dart";
 import "package:tech_byte/utils/api.dart" as api;
 
 part "edit_product_provider.g.dart";
@@ -19,7 +18,6 @@ class EditProduct extends _$EditProduct {
     state = EditProductStateType.loading;
     try {
       await api.editProduct(newProduct.id, newProduct);
-      // ref.read(productProvider(newProduct.id).notifier).fetchProduct(id);
 
       ref.read(productListProvider.notifier).fetchProducts();
       state = EditProductStateType.success;
