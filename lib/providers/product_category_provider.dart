@@ -12,11 +12,15 @@ class ProductCategory extends _$ProductCategory {
   }
 
   Future<List<TBPickerListItemModel>> fetchCategories() async {
-    final categoriesRaw = await api.getProductCategories();
-    final categories = [
-      for (final category in categoriesRaw)
-        TBPickerListItemModel(name: category)
-    ];
-    return Future.value(categories);
+    try {
+      final categoriesRaw = await api.getProductCategories();
+      final categories = [
+        for (final category in categoriesRaw)
+          TBPickerListItemModel(name: category)
+      ];
+      return Future.value(categories);
+    } catch (error) {
+      rethrow;
+    }
   }
 }

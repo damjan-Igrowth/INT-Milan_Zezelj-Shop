@@ -1,15 +1,20 @@
+import "package:json_annotation/json_annotation.dart";
+
+part "product_model.g.dart";
+
+@JsonSerializable()
 class TBProductModel {
-  int id;
-  String title;
-  String description;
-  double price;
-  double discountPercentage;
-  double rating;
-  int stock;
-  String brand;
-  String category;
-  String thumbnail;
-  late List<String> images;
+  final int id;
+  final String title;
+  final String description;
+  final double price;
+  final double discountPercentage;
+  final double rating;
+  final int stock;
+  final String brand;
+  final String category;
+  final String thumbnail;
+  final List<String> images;
 
   TBProductModel(
       {required this.id,
@@ -24,28 +29,8 @@ class TBProductModel {
       required this.thumbnail,
       required this.images});
 
-  TBProductModel.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        title = json["title"],
-        description = json["description"],
-        price = json["price"].toDouble(),
-        discountPercentage = json["discountPercentage"].toDouble(),
-        rating = json["rating"].toDouble(),
-        stock = json["stock"].toInt(),
-        brand = json["brand"],
-        category = json["category"],
-        thumbnail = json["thumbnail"] {
-    images = [for (final image in json["images"]) image.toString()];
-  }
+  factory TBProductModel.fromJson(Map<String, dynamic> json) =>
+      _$TBProductModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      "title": title,
-      "description": description,
-      "price": price.toStringAsFixed(2),
-      "discountPercentage": discountPercentage.toStringAsFixed(2),
-      "brand": brand,
-      "category": category,
-    };
-  }
+  Map<String, dynamic> toJson() => _$TBProductModelToJson(this);
 }
