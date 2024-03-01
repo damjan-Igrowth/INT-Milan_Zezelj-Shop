@@ -64,7 +64,7 @@ class TBDetailOverviewCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "${price}\$",
+                        "$price\$",
                         style: TextStyle(
                           color: TBColor.card.red,
                           fontFamily: "Inter",
@@ -73,7 +73,7 @@ class TBDetailOverviewCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "-${discount}%",
+                        "-$discount%",
                         style: TextStyle(
                           color: TBColor.card.green,
                           fontFamily: "Inter",

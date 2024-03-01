@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tech_byte/models/product_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tech_byte/providers/product_provider.dart';
 import 'package:tech_byte/screens/product_edit_screen.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
@@ -10,25 +11,29 @@ import 'package:tech_byte/widgets/detail_overview_card_widget.dart';
 import 'package:tech_byte/widgets/gallery_widget.dart';
 import 'package:tech_byte/widgets/section_widget.dart';
 
-class TBProductDetailScreen extends StatelessWidget {
-  final void Function(TBProductModel) onEdit;
-  final TBProductModel selectedProduct;
+class TBProductDetailScreen extends ConsumerWidget {
+  final int id;
 
-  const TBProductDetailScreen(
-      {super.key, required this.selectedProduct, required this.onEdit});
+  const TBProductDetailScreen({super.key, required this.id});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productState = ref.watch(productProvider(id));
+
     return Scaffold(
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar(
-        title: Text("Product details"),
+        title: const Text("Product details"),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => TBProductEditScreen(
-                      selectedProduct: selectedProduct, onEdit: onEdit)));
+              switch (productState) {
+                case AsyncData():
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TBProductEditScreen(id: id)));
+                default:
+                  break;
+              }
             },
             icon: Icon(
               TBIcons.edit,
@@ -37,38 +42,52 @@ class TBProductDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            TBGallery.url(images: [selectedProduct.image]),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: TBDimensions.productDetailsScreen.contentPadding),
-              child: Column(
-                children: [
-                  TBSection(
-                      title: "Overview",
-                      content: TBDetailOverviewCard(
-                          name: selectedProduct.name,
-                          description: selectedProduct.description,
-                          company: selectedProduct.company,
-                          price: selectedProduct.price,
-                          discount: selectedProduct.discount,
-                          rating: selectedProduct.rating)),
-                  TBSection(
-                      title: "Availability",
-                      content: TBAvailabilityCard(
-                        category: selectedProduct.category,
-                        onStock: selectedProduct.onStock,
-                      )),
-                  SizedBox(
-                    height:
-                        TBDimensions.productDetailsScreen.contentBottomPadding,
-                  )
-                ],
+      body: productState.when(
+        data: (value) => SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TBGallery.url(images: [value.image]),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal:
+                        TBDimensions.productDetailsScreen.contentPadding),
+                child: Column(
+                  children: [
+                    TBSection(
+                        title: "Overview",
+                        content: TBDetailOverviewCard(
+                            name: value.name,
+                            description: value.description,
+                            company: value.company,
+                            price: value.price,
+                            discount: value.discount,
+                            rating: value.rating)),
+                    TBSection(
+                        title: "Availability",
+                        content: TBAvailabilityCard(
+                          category: value.category,
+                          onStock: value.onStock,
+                        )),
+                    SizedBox(
+                      height: TBDimensions
+                          .productDetailsScreen.contentBottomPadding,
+                    )
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
+        error: (error, stackTrace) => const Text("Oops, something went wrong!"),
+        loading: () => Center(
+          child: SizedBox(
+            width: 100,
+            height: 100,
+            child: CircularProgressIndicator(
+              color: TBColor.app.lightBlue,
             ),
-          ],
+          ),
         ),
       ),
     );

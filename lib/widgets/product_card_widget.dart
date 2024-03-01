@@ -107,7 +107,7 @@ class TBProductCard extends StatelessWidget {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500)),
                               TBRating(rating: rating),
-                              Text("On stock: ${onStock}",
+                              Text("On stock: $onStock",
                                   style: const TextStyle(
                                       fontFamily: "Inter",
                                       fontSize: 12,

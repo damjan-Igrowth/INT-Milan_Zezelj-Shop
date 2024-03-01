@@ -1,4 +1,5 @@
 class TBProductModel {
+  int id;
   String name;
   String company;
   String category;
@@ -10,7 +11,8 @@ class TBProductModel {
   String image;
 
   TBProductModel(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.company,
       required this.category,
       required this.description,
@@ -21,7 +23,8 @@ class TBProductModel {
       required this.image});
 
   TBProductModel.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
+      : id = json["id"],
+        name = json["name"],
         company = json["company"],
         category = json["category"],
         description = json["description"],
@@ -33,6 +36,7 @@ class TBProductModel {
 }
 
 TBProductModel product1 = TBProductModel.fromJson({
+  "id": 1,
   "name": "iPhone 15 Pro",
   "company": "Apple",
   "category": "Smartphone",
@@ -47,6 +51,7 @@ TBProductModel product1 = TBProductModel.fromJson({
 });
 
 TBProductModel product2 = TBProductModel.fromJson({
+  "id": 2,
   "name": "Samsung S24",
   "company": "Samsung",
   "category": "Smartphone",
@@ -60,6 +65,7 @@ TBProductModel product2 = TBProductModel.fromJson({
       "https://s3-alpha-sig.figma.com/img/6bda/c53e/73747002d112b5221144e5b027cddd77?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T3f5VwHWSHxcoZIMiMdT-KIzpXB8jnHTQvj0NyIEbYfGlz-FU4m7ALrE~ONPrF8GjIfFK9wffytkS-mSJFG2A6jen2Zfah~lYu0XcbRs~k0Zlzirix~D5CLUbMFa7125R7b6GX~JyIiQP32gja8my8k85-W8bvsUWYBl2X4zP0jJ~F8CIjikfkD3Vpd5PB-lovBNl3H5x8nDj5ngwSVk~LC-FdHkL8sHIMTOSsTqSnqHifUzbtNHwamFCf0WdSfLiBI-pWuH-cJesS8~jRgh22RP2gRfrYPP~4dALBTk03RjYQlWQnmx-kFNJIUv1cHPXIvLZwLiwESxaqY8aub4fQ__"
 });
 TBProductModel product3 = TBProductModel.fromJson({
+  "id": 3,
   "name": "Xiaomi 14",
   "company": "Xiaomi",
   "category": "Laptops",
