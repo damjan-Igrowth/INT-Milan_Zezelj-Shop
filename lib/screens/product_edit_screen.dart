@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tech_byte/models/picker_list_item_model.dart';
 import 'package:tech_byte/models/product_model.dart';
 import 'package:tech_byte/providers/edit_product_provider.dart';
+import 'package:tech_byte/providers/product_category_provider.dart';
 import 'package:tech_byte/providers/product_provider.dart';
 import 'package:tech_byte/utils/colors.dart';
 import 'package:tech_byte/utils/constants.dart';
@@ -26,7 +27,7 @@ class TBProductEditScreen extends ConsumerStatefulWidget {
 class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   late String? _companySelection;
   late String? _categorySelection;
-  final TextEditingController _nameTextEditingController =
+  final TextEditingController _titleTextEditingController =
       TextEditingController();
   final TextEditingController _descriptionTextEditingController =
       TextEditingController();
@@ -42,11 +43,12 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
     final productState = ref.read(productProvider(widget.id));
 
     productState.whenOrNull(data: (product) {
-      _nameTextEditingController.text = product.name;
-      _companySelection = product.company;
+      _titleTextEditingController.text = product.title;
+      _companySelection = product.brand;
       _categorySelection = product.category;
       _descriptionTextEditingController.text = product.description;
-      _discountTextEditingController.text = product.discount.toStringAsFixed(2);
+      _discountTextEditingController.text =
+          product.discountPercentage.toStringAsFixed(2);
       _priceTextEditingController.text = product.price.toStringAsFixed(2);
     });
 
@@ -55,11 +57,10 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
 
   @override
   void dispose() {
-    _nameTextEditingController.dispose();
+    _titleTextEditingController.dispose();
     _descriptionTextEditingController.dispose();
     _discountTextEditingController.dispose();
     _priceTextEditingController.dispose();
-
     _formKey.currentState?.dispose();
 
     super.dispose();
@@ -68,6 +69,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
   @override
   Widget build(BuildContext context) {
     final productState = ref.watch(productProvider(widget.id));
+    final categoriesState = ref.watch(productCategoryProvider);
     final editProductState = ref.watch(editProductProvider(widget.id));
     ref.listen(
       editProductProvider(widget.id),
@@ -110,7 +112,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
             child: Column(
               children: [
                 TBGallery.url(
-                  images: [product.image],
+                  images: product.images,
                 ),
                 SizedBox(
                     height:
@@ -125,7 +127,7 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                       children: [
                         TBTextInput(
                           enabled: enabled,
-                          textEditingController: _nameTextEditingController,
+                          textEditingController: _titleTextEditingController,
                           label: "Product name",
                           validator: textInputValidator,
                         ),
@@ -155,7 +157,8 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                             height: TBDimensions
                                 .productEditDetailsScreen.contentSpacing),
                         TBSelectInput(
-                          enabled: enabled,
+                          enabled: !categoriesState.isLoading && enabled,
+                          isLoading: categoriesState.isLoading,
                           label: "Category",
                           selectedItem: _categorySelection,
                           onTap: (String? value) {
@@ -165,13 +168,10 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                           },
                           suffixIcon: const Icon(Icons.category_outlined),
                           validator: selectInputValidator,
-                          items: [
-                            TBPickerListItemModel(name: "Smartphones"),
-                            TBPickerListItemModel(name: "Laptops"),
-                            TBPickerListItemModel(name: "Video Games"),
-                            TBPickerListItemModel(name: "Audio"),
-                            TBPickerListItemModel(name: "Appliances")
-                          ],
+                          items: categoriesState.when(
+                              data: (categories) => categories,
+                              error: (error, stackTrace) => null,
+                              loading: () => []),
                         ),
                         SizedBox(
                             height: TBDimensions
@@ -227,35 +227,25 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
                                   .edit(
                                     TBProductModel(
                                       id: product.id,
-                                      name: _nameTextEditingController.text
+                                      title: _titleTextEditingController.text
                                           .trim(),
-                                      company: _companySelection!,
+                                      brand: _companySelection!,
                                       category: _categorySelection!,
                                       description:
                                           _descriptionTextEditingController.text
                                               .trim(),
-                                      discount: double.parse(
+                                      discountPercentage: double.parse(
                                           _discountTextEditingController.text
                                               .trim()),
                                       price: double.parse(
                                           _priceTextEditingController.text
                                               .trim()),
-                                      image: product.image,
-                                      onStock: product.onStock,
+                                      thumbnail: product.thumbnail,
+                                      stock: product.stock,
                                       rating: product.rating,
+                                      images: product.images,
                                     ),
                                   );
-                            } else {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) => TBAlertDialog.error(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    message:
-                                        "Something went wrong while editing product!"),
-                              );
                             }
                           },
                         ),
@@ -266,16 +256,12 @@ class _TBProductEditScreenState extends ConsumerState<TBProductEditScreen> {
               ],
             ),
           ),
-          error: (error, stackTrace) =>
-              const Text("Oops, something went wrong!"),
-          skipLoadingOnReload: true,
-          loading: () => Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
-              child: CircularProgressIndicator(
-                color: TBColor.app.lightBlue,
-              ),
+          error: (error, stackTrace) => Text(productState.error.toString()),
+          loading: () => SizedBox(
+            width: MediaQuery.textScalerOf(context).scale(100),
+            height: MediaQuery.textScalerOf(context).scale(100),
+            child: CircularProgressIndicator(
+              color: TBColor.app.lightBlue,
             ),
           ),
         ),

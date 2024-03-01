@@ -19,7 +19,6 @@ class TBProductDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productState = ref.watch(productProvider(id));
-
     return Scaffold(
       backgroundColor: TBColor.app.backgroundColor,
       appBar: TBAppBar(
@@ -27,13 +26,12 @@ class TBProductDetailScreen extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              switch (productState) {
-                case AsyncData():
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => TBProductEditScreen(id: id)));
-                default:
-                  break;
-              }
+              productState.when(
+                  data: (product) => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => TBProductEditScreen(id: id))),
+                  error: (error, stackTrace) {},
+                  loading: () {});
             },
             icon: Icon(
               TBIcons.edit,
@@ -43,11 +41,11 @@ class TBProductDetailScreen extends ConsumerWidget {
         ],
       ),
       body: productState.when(
-        data: (value) => SingleChildScrollView(
+        data: (product) => SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TBGallery.url(images: [value.image]),
+              TBGallery.url(images: product.images),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal:
@@ -57,17 +55,17 @@ class TBProductDetailScreen extends ConsumerWidget {
                     TBSection(
                         title: "Overview",
                         content: TBDetailOverviewCard(
-                            name: value.name,
-                            description: value.description,
-                            company: value.company,
-                            price: value.price,
-                            discount: value.discount,
-                            rating: value.rating)),
+                            name: product.title,
+                            description: product.description,
+                            company: product.brand,
+                            price: product.price,
+                            discount: product.discountPercentage,
+                            rating: product.rating)),
                     TBSection(
                         title: "Availability",
                         content: TBAvailabilityCard(
-                          category: value.category,
-                          onStock: value.onStock,
+                          category: product.category,
+                          onStock: product.stock,
                         )),
                     SizedBox(
                       height: TBDimensions

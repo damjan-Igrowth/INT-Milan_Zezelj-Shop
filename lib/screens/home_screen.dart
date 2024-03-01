@@ -52,20 +52,21 @@ class HomeScreen extends ConsumerWidget {
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
                           TBProductDetailScreen(id: products[index].id))),
-                  name: products[index].name,
+                  name: products[index].title,
                   category: products[index].category,
                   price: products[index].price,
-                  discount: products[index].discount,
-                  image: products[index].image,
+                  discount: products[index].discountPercentage,
+                  image: products[index].thumbnail,
                   rating: products[index].rating,
-                  onStock: products[index].onStock),
+                  onStock: products[index].stock),
             ),
-            error: (error, stackTrace) =>
-                const Text("Oops, something went wrong!"),
+            error: (error, stackTrace) => Text(productsState.error.toString()),
             loading: () => SizedBox(
               width: 100,
               height: 100,
-              child: CircularProgressIndicator(color: TBColor.app.lightBlue),
+              child: CircularProgressIndicator(
+                color: TBColor.app.lightBlue,
+              ),
             ),
           ),
         ),

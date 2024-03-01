@@ -1,5 +1,6 @@
 import "package:riverpod_annotation/riverpod_annotation.dart";
 import "package:tech_byte/models/product_model.dart";
+import "package:tech_byte/utils/api.dart" as api;
 
 part "product_list_provider.g.dart";
 
@@ -11,20 +12,12 @@ class ProductList extends _$ProductList {
   }
 
   Future<List<TBProductModel>> fetchProducts() async {
-    await Future.delayed(const Duration(seconds: 2));
-    List<TBProductModel> products = [
-      product1,
-      product2,
-      product3,
-    ];
-    state = AsyncValue.data(products);
-    return products;
-  }
-
-  void updateProduct(TBProductModel editedProduct) async {
-    state.whenData((products) => state = AsyncValue.data([
-          for (final product in products)
-            product.id == editedProduct.id ? editedProduct : product
-        ]));
+    try {
+      List<TBProductModel> products = await api.getProducts();
+      state = AsyncValue.data(products);
+      return products;
+    } catch (error) {
+      rethrow;
+    }
   }
 }

@@ -10,6 +10,7 @@ class TBPickerList extends StatefulWidget {
   final void Function()? onIconPressed;
   final void Function(String?) onItemPressed;
   final String? selectedItem;
+  final bool? isLoading;
 
   const TBPickerList(
       {super.key,
@@ -17,7 +18,8 @@ class TBPickerList extends StatefulWidget {
       this.onIconPressed,
       required this.selectedItem,
       required this.items,
-      required this.onItemPressed});
+      required this.onItemPressed,
+      this.isLoading});
 
   @override
   State<TBPickerList> createState() => _TBPickerListState();
