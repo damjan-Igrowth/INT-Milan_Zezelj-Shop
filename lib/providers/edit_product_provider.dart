@@ -14,16 +14,13 @@ class EditProduct extends _$EditProduct {
     return EditProductStateType.idle;
   }
 
-  void edit(TBProductModel newProduct) async {
+  void edit(TBProductModel editedProduct) async {
     state = EditProductStateType.loading;
     try {
       await Future.delayed(const Duration(seconds: 3));
-      ref.read(productProvider(newProduct.id).notifier).fetchProduct(id);
+      ref.read(productProvider(editedProduct.id).notifier).fetchProduct(id);
 
-      ref.read(productListProvider.notifier).update((products) => products = [
-            for (final product in products)
-              product.id == newProduct.id ? newProduct : product
-          ]);
+      ref.read(productListProvider.notifier).updateProduct(editedProduct);
       state = EditProductStateType.success;
     } catch (error) {
       state = EditProductStateType.error;

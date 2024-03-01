@@ -20,4 +20,11 @@ class ProductList extends _$ProductList {
     state = AsyncValue.data(products);
     return products;
   }
+
+  void updateProduct(TBProductModel editedProduct) async {
+    state.whenData((products) => state = AsyncValue.data([
+          for (final product in products)
+            product.id == editedProduct.id ? editedProduct : product
+        ]));
+  }
 }
